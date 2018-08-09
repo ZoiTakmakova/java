@@ -22,7 +22,7 @@ public static void main(String[] args) {
   //Объект класса Point точка p2
   Point p2 = new Point(5.0, 7.0);
   //Вывод результата расчета Расстояния между точками p1 и p2
-  System.out.println("Расстояние между точками p1 и p2 = " + distance(p1, p2));
+  System.out.println("Расстояние между точками p1 и p2 = " + p2.distance(p1));
 }
 
 //Объявление Функции hello с аргументом somebody
@@ -30,11 +30,11 @@ public static void hello(String somebody) {
   System.out.println("Hello, " + somebody + "!");
 }
 
+/*
 //Объявление Функции distance с аргументами p1 и p2
 public static double distance(Point p1, Point p2) {
   return Math.sqrt((Math.pow((p2.x - p1.x), 2)) + (Math.pow((p2.y - p1.y), 2)));
-
-
 }
+*/
 
 }
