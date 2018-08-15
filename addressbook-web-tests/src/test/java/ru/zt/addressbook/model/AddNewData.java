@@ -1,4 +1,4 @@
-package ru.zt.addressbook;
+package ru.zt.addressbook.model;
 
 public class AddNewData {
 private final String firstname;

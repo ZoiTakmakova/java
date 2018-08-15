@@ -1,4 +1,4 @@
-package ru.zt.addressbook;
+package ru.zt.addressbook.model;
 
 public class GroupData {
 private final String name;
