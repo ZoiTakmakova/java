@@ -1,7 +1,5 @@
 package ru.zt.addressbook.appmanager;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
@@ -16,14 +14,7 @@ private SessionHelper sessionHelper;
 private NavigationHelper navigationHelper;
 private GroupHelper groupHelper;
 
-public static boolean isAlertPresent(FirefoxDriver wd) {
-  try {
-    wd.switchTo().alert();
-    return true;
-  } catch (NoAlertPresentException e) {
-    return false;
-  }
-}
+
 
 public void init() {
   wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true).setBinary("C://Program Files/Mozilla Firefox/firefox.exe"));
