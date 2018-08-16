@@ -20,14 +20,14 @@ public void submitAddNewCreation() {
 }
 
 public void fillAddNewForm(AddNewData addNewData) {
-  type(By.name("firstname"),addNewData.getFirstname());
-  type(By.name("middlename"),addNewData.getMiddlename());
-  type(By.name("lastname"),addNewData.getLastname());
-  type(By.name("address"),addNewData.getAddress());
-  type(By.name("home"),addNewData.getHomePhone());
-  type(By.name("mobile"),addNewData.getMobilePhone());
-  type(By.name("email"),addNewData.getEmail());
-  }
+  type(By.name("firstname"), addNewData.getFirstname());
+  type(By.name("middlename"), addNewData.getMiddlename());
+  type(By.name("lastname"), addNewData.getLastname());
+  type(By.name("address"), addNewData.getAddress());
+  type(By.name("home"), addNewData.getHomePhone());
+  type(By.name("mobile"), addNewData.getMobilePhone());
+  type(By.name("email"), addNewData.getEmail());
+}
 
 public void selectContact() {
   click(By.name("selected[]"));
@@ -36,4 +36,17 @@ public void selectContact() {
 public void submitDeletionContact() {
   click(By.xpath("//div[@id='content']/form[2]/div[2]/input"));
 }
+
+public void completionDeletion() {
+  wd.switchTo().alert().accept();
+}
+
+public void submitEditContact() {
+  click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+}
+
+public void submitUpDateContact() {
+  click(By.xpath("//div[@id='content']/form[1]/input[22]"));
+}
+
 }
