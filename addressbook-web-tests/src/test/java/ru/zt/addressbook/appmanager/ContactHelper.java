@@ -28,4 +28,12 @@ public void fillAddNewForm(AddNewData addNewData) {
   type(By.name("mobile"),addNewData.getMobilePhone());
   type(By.name("email"),addNewData.getEmail());
   }
+
+public void selectContact() {
+  click(By.name("selected[]"));
+}
+
+public void submitDeletionContact() {
+  click(By.xpath("//div[@id='content']/form[2]/div[2]/input"));
+}
 }

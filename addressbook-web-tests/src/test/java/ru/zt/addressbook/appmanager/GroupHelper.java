@@ -30,6 +30,7 @@ public void initGroupCreation() {
 }
 
 public void deleteSelectedGroups() {
+
   click(By.name("delete"));
 }
 
