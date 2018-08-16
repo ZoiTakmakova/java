@@ -3,7 +3,7 @@ package ru.zt.addressbook.tests;
 import org.testng.annotations.Test;
 import ru.zt.addressbook.model.AddNewData;
 
-public class AddNewCreationTest extends TestBase {
+public class ContactCreationTest extends TestBase {
 
 @Test
 public void testAddNewCreation() {
