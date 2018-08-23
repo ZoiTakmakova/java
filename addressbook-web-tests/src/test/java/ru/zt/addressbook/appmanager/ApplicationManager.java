@@ -26,11 +26,11 @@ public ApplicationManager(String browser){
 
 public void init() {
  /* String browser = BrowserType.FIREFOX;*/
-  if(browser == BrowserType.FIREFOX){
+  if(browser.equals(BrowserType.FIREFOX)){
     wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true).setBinary("C://Program Files/Mozilla Firefox/firefox.exe"));
-  } else  if (browser == BrowserType.CHROME){
+  } else  if (browser.equals(BrowserType.CHROME)){
     wd = new ChromeDriver();
-  }else  if (browser == BrowserType.IE) {
+  }else  if (browser.equals(BrowserType.IE)) {
     wd = new InternetExplorerDriver();
   }
 
