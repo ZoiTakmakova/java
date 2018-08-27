@@ -1,8 +1,11 @@
 package ru.zt.addressbook.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
-import ru.zt.addressbook.model.AddNewData;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
+import ru.zt.addressbook.model.ContactData;
 
 public class ContactHelper extends HelperBase {
 
@@ -19,14 +22,20 @@ public void submitAddNewCreation() {
   click(By.xpath("//div[@id='content']/form/input[21]"));
 }
 
-public void fillAddNewForm(AddNewData addNewData) {
-  type(By.name("firstname"), addNewData.getFirstname());
-  type(By.name("middlename"), addNewData.getMiddlename());
-  type(By.name("lastname"), addNewData.getLastname());
-  type(By.name("address"), addNewData.getAddress());
-  type(By.name("home"), addNewData.getHomePhone());
-  type(By.name("mobile"), addNewData.getMobilePhone());
-  type(By.name("email"), addNewData.getEmail());
+public void fillContactData(ContactData contactData, boolean creation) {
+  type(By.name("firstname"), contactData.getFirstname());
+  type(By.name("middlename"), contactData.getMiddlename());
+  type(By.name("lastname"), contactData.getLastname());
+  type(By.name("address"), contactData.getAddress());
+  type(By.name("home"), contactData.getHomePhone());
+  type(By.name("mobile"), contactData.getMobilePhone());
+  type(By.name("email"), contactData.getEmail());
+  //элемент из выпадающего списка
+  if (creation) {
+    new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+  } else {
+    Assert.assertFalse(isElementPresent(By.name("new_group")));
+  }
 }
 
 public void selectContact() {
