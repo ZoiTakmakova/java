@@ -1,7 +1,6 @@
 package ru.zt.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
@@ -58,4 +57,13 @@ public void submitUpDateContact() {
   click(By.xpath("//div[@id='content']/form[1]/input[22]"));
 }
 
+public void createContact(ContactData contact, boolean b) {
+  fillContactData(contact,b);
+  submitAddNewCreation();
+  returnToHomePage();
+}
+
+public boolean isThereAContact() {
+return isElementPresent(By.name("selected[]"));
+}
 }
