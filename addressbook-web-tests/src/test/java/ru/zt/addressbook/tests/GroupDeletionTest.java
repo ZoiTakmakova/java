@@ -16,11 +16,11 @@ public void testGroupDeletion() {
   if (!app.getGroupHelper().isThereAGroup()){
     app.getGroupHelper().createGroup(new GroupData("test1", "test2", "test3"));
   }
-  List<GroupData> before = app.getGroupHelper().getGroupList();//размер списка до удаления
+  List<GroupData> before = app.getGroupHelper().getGroupList();//размер списка групп  до удаления
   app.getGroupHelper().selectGroup(before.size()-1);
   app.getGroupHelper().deleteSelectedGroups();
   app.getGroupHelper().returnToGroupPage();
-  List<GroupData> after = app.getGroupHelper().getGroupList();//размер списка после удаления
+  List<GroupData> after = app.getGroupHelper().getGroupList();//размер списка групп после удаления
   Assert.assertEquals(after.size(),before.size()-1);
 }
 

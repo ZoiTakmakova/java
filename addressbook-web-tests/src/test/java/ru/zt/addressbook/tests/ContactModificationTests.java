@@ -7,19 +7,26 @@ import ru.zt.addressbook.model.GroupData;
 public class ContactModificationTests extends TestBase {
 @Test
 public void testContactModification() {
+  //переход на главную страницу
   app.getNavigationHelper().gotoHomePage();
+  //если контактов нет
   if (!app.getContactHelper().isThereAContact()) {
-    app.getNavigationHelper().gotoAddNewPage();
-    if (!app.getGroupHelper().isThereAGroup()){
-      app.getNavigationHelper().gotoGroupPage();
+    //переходим на страницу "группы"
+    app.getNavigationHelper().gotoGroupPage();
+    //если групп нет
+    if (!app.getGroupHelper().isThereAGroup()) {
+      //создаем новую группу
       app.getGroupHelper().createGroup(new GroupData("test1", "test2", "test3"));
     }
+    //переходим на форму создания контаков
     app.getNavigationHelper().gotoAddNewPage();
+    //создаем новый контакт
     app.getContactHelper().createContact(new ContactData("Ivanov23", "Ivan", "Ivanovich", null, "8956234", "89041235678", "ivanov@mail.ru", "test1"), true);
   }
+  //выбираем контакт
   app.getContactHelper().selectContact();
   app.getContactHelper().submitEditContact();
-  app.getContactHelper().fillContactData(new ContactData("Ivanov6", "Ivan6", "Ivanovich6", "Tver", "8956234", "89041235678", "ivanov@mail.ru",null),false);
+  app.getContactHelper().fillContactData(new ContactData("Ivanov6", "Ivan6", "Ivanovich6", "Tver", "8956234", "89041235678", "ivanov@mail.ru", null), false);
   app.getContactHelper().submitUpDateContact();
 }
 }

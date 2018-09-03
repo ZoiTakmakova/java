@@ -8,9 +8,8 @@ public class ContactCreationTest extends TestBase {
 
 @Test
 public void testAddNewCreation() {
-  app.getNavigationHelper().gotoAddNewPage();
+ app.getNavigationHelper().gotoGroupPage();
   if (!app.getGroupHelper().isThereAGroup()){
-    app.getNavigationHelper().gotoGroupPage();
     app.getGroupHelper().createGroup(new GroupData("test1", "test2", "test3"));
   }
   app.getNavigationHelper().gotoAddNewPage();
