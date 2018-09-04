@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.zt.addressbook.model.GroupData;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 
@@ -21,11 +22,11 @@ public void testGroupCreation() {
   List<GroupData> after = app.getGroupHelper().getGroupList();//размер списка после удаления
   Assert.assertEquals(after.size(), before.size() + 1);
 
-
-//список превращаем в поток, по этому потоку пробегает функция сравниватель, находит максимальный эл-т,
-// сравниваются объекты GroupData, путем сравнения их Ид, на выходе функции будем объект с максимальным Ид
-  group.setId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
   before.add(group);
-  Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
+  Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
+  before.sort(byId);
+  after.sort(byId);
+  Assert.assertEquals(before,after);
+
 }
 }
