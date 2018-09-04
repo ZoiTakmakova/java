@@ -28,5 +28,6 @@ public void testContactModification() {
   app.getContactHelper().submitEditContact();
   app.getContactHelper().fillContactData(new ContactData("Ivanov6", "Ivan6", "Ivanovich6", "Tver", "8956234", "89041235678", "ivanov@mail.ru", null), false);
   app.getContactHelper().submitUpDateContact();
+
 }
 }
