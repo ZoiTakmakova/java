@@ -5,6 +5,8 @@ import org.testng.annotations.Test;
 import ru.zt.addressbook.model.ContactData;
 import ru.zt.addressbook.model.GroupData;
 
+import java.util.List;
+
 public class ContactModificationTests extends TestBase {
 @Test
 public void testContactModification() {
@@ -25,15 +27,15 @@ public void testContactModification() {
     app.getContactHelper().createContact(new ContactData("Ivanov23", "Ivan", "Ivanovich", null, "8956234", "89041235678", "ivanov@mail.ru", "test1"), true);
   }
   app.getNavigationHelper().gotoHomePage();
-  int before = app.getContactHelper().getContactCount();//кол-во контактов до модификации контакта
+  List<ContactData> before = app.getContactHelper().getContactList();//кол-во контактов до модификации контакта
   //выбираем контакт
-  app.getContactHelper().selectContact(before-1);
+  app.getContactHelper().selectContact(before.size()-1);
   app.getContactHelper().submitEditContact();
   app.getContactHelper().fillContactData(new ContactData("Ivanov6", "Ivan6", "Ivanovich6", "Tver", "8956234", "89041235678", "ivanov@mail.ru", null), false);
   app.getContactHelper().submitUpDateContact();
   app.getNavigationHelper().gotoHomePage();
-  int after = app.getContactHelper().getContactCount();//кол-во контактов после модификации контакта
-  Assert.assertEquals(after, before);//проверка: кол-во контактов после модификации должно быть равно кол-ву контактов до модификации
+  List<ContactData> after = app.getContactHelper().getContactList();
+  Assert.assertEquals(after.size(), before.size());//проверка: кол-во контактов после модификации должно быть равно кол-ву контактов до модификации
 
 }
 }

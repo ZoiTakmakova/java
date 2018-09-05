@@ -5,6 +5,8 @@ import org.testng.annotations.Test;
 import ru.zt.addressbook.model.ContactData;
 import ru.zt.addressbook.model.GroupData;
 
+import java.util.List;
+
 
 public class ContactDeletionTest extends TestBase {
 
@@ -21,12 +23,12 @@ public void ContactDeletionTest() {
     app.getContactHelper().createContact(new ContactData("Ivanov23", "Ivan", "Ivanovich", null, "8956234", "89041235678", "ivanov@mail.ru", "test1"), true);
   }
   app.getNavigationHelper().gotoHomePage();
-  int before = app.getContactHelper().getContactCount();//кол-во контактов до удаления контакта
-  app.getContactHelper().selectContact(before-1);
+  List<ContactData> before = app.getContactHelper().getContactList();
+  app.getContactHelper().selectContact(before.size()-1);
   app.getContactHelper().submitDeletionContact();
   app.getContactHelper().completionDeletion();
   app.getNavigationHelper().gotoHomePage();
-  int after = app.getContactHelper().getContactCount();//кол-во контактов после удаления контакта
-  Assert.assertEquals(after, before - 1);//проверка: кол-во контактов после удаления должно быть равно кол-ву контактов до удаления  -1
+  List<ContactData> after = app.getContactHelper().getContactList();
+  Assert.assertEquals(after.size(), before.size() -1);//проверка: кол-во контактов после удаления должно быть равно кол-ву контактов до удаления  -1
 }
 }

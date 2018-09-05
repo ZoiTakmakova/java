@@ -2,9 +2,13 @@ package ru.zt.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.zt.addressbook.model.ContactData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends HelperBase {
 
@@ -58,14 +62,15 @@ public void submitUpDateContact() {
 }
 
 public void createContact(ContactData contact, boolean b) {
-  fillContactData(contact,b);
+  fillContactData(contact, b);
   submitAddNewCreation();
   returnToHomePage();
 }
 
 public boolean isThereAContact() {
-return isElementPresent(By.name("selected[]"));
+  return isElementPresent(By.name("selected[]"));
 }
+
 //getContactCount - метод подсчета кол-ва контактов
 public int getContactCount() {
   //findElements - возвращает список эл-ов
@@ -73,4 +78,19 @@ public int getContactCount() {
   return wd.findElements(By.name("selected[]")).size();
 
 }
+
+//формирование коллекции элементов
+public List<ContactData> getContactList() {
+  List<ContactData> contacts = new ArrayList<ContactData>();
+  List<WebElement> elements = wd.findElements(By.name("selected[]"));
+  for (WebElement element : elements) {
+    String name = element.getText();
+    ContactData contact = new ContactData(name, null, null, null, null, null, null, null);
+    contacts.add(contact);
+  }
+  return contacts;
 }
+
+
+}
+
