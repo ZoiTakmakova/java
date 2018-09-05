@@ -66,4 +66,11 @@ public void createContact(ContactData contact, boolean b) {
 public boolean isThereAContact() {
 return isElementPresent(By.name("selected[]"));
 }
+//getContactCount - метод подсчета кол-ва контактов
+public int getContactCount() {
+  //findElements - возвращает список эл-ов
+  //size - получить размер
+  return wd.findElements(By.name("selected[]")).size();
+
+}
 }
