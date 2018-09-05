@@ -27,7 +27,7 @@ public void testContactModification() {
   app.getNavigationHelper().gotoHomePage();
   int before = app.getContactHelper().getContactCount();//кол-во контактов до модификации контакта
   //выбираем контакт
-  app.getContactHelper().selectContact();
+  app.getContactHelper().selectContact(before-1);
   app.getContactHelper().submitEditContact();
   app.getContactHelper().fillContactData(new ContactData("Ivanov6", "Ivan6", "Ivanovich6", "Tver", "8956234", "89041235678", "ivanov@mail.ru", null), false);
   app.getContactHelper().submitUpDateContact();

@@ -22,7 +22,7 @@ public void ContactDeletionTest() {
   }
   app.getNavigationHelper().gotoHomePage();
   int before = app.getContactHelper().getContactCount();//кол-во контактов до удаления контакта
-  app.getContactHelper().selectContact();
+  app.getContactHelper().selectContact(before-1);
   app.getContactHelper().submitDeletionContact();
   app.getContactHelper().completionDeletion();
   app.getNavigationHelper().gotoHomePage();
