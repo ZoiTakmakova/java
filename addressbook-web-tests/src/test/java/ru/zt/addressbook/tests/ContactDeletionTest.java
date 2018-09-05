@@ -22,9 +22,11 @@ public void ContactDeletionTest() {
   }
   app.getNavigationHelper().gotoHomePage();
   int before = app.getContactHelper().getContactCount();//кол-во контактов до удаления контакта
+  app.getContactHelper().selectContact();
   app.getContactHelper().submitDeletionContact();
   app.getContactHelper().completionDeletion();
+  app.getNavigationHelper().gotoHomePage();
   int after = app.getContactHelper().getContactCount();//кол-во контактов после удаления контакта
-  //  Assert.assertEquals(after, before - 1);//проверка: кол-во контактов после удаления должно быть равно кол-ву контактов до удаления  -1
+  Assert.assertEquals(after, before - 1);//проверка: кол-во контактов после удаления должно быть равно кол-ву контактов до удаления  -1
 }
 }
