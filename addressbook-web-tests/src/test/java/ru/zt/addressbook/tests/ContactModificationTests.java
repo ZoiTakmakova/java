@@ -37,5 +37,6 @@ public void testContactModification() {
   List<ContactData> after = app.getContactHelper().getContactList();
   Assert.assertEquals(after.size(), before.size());//проверка: кол-во контактов после модификации должно быть равно кол-ву контактов до модификации
 
+  Assert.assertEquals(before, after);
 }
 }
