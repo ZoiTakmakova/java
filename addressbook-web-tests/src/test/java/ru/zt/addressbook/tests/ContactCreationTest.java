@@ -18,7 +18,7 @@ public void testAddNewCreation() {
     app.getGroupHelper().createGroup(new GroupData("test1", "test2", "test3"));
   }
   app.getNavigationHelper().gotoAddNewPage();
-  app.getContactHelper().createContact(new ContactData("Ivanov1", "Ivan2", null, null, null, null, null, "test1"), true);
+  app.getContactHelper().createContact(new ContactData("Ivanov1", null, null, null, null, null, null, "test1"), true);
  List<ContactData> after = app.getContactHelper().getContactList();
  Assert.assertEquals(after.size(),before.size() +1);//проверка: кол-во контактов после добавление должно быть равно кол-ву контактов до добавления +1
 }

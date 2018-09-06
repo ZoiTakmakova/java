@@ -53,9 +53,9 @@ public void completionDeletion() {
   wd.switchTo().alert().accept();
 }
 
-public void submitEditContact() {
-  click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
-}
+//исправить метод!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+public void submitEditContact(int index) {  click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));}
+//href="edit.php?id=112"
 
 public void submitUpDateContact() {
   click(By.xpath("//div[@id='content']/form[1]/input[22]"));
@@ -84,8 +84,9 @@ public List<ContactData> getContactList() {
   List<ContactData> contacts = new ArrayList<ContactData>();
   List<WebElement> elements = wd.findElements(By.name("entry"));
   for (WebElement element : elements) {
-    String firstname = element.getText();
-    ContactData contact = new ContactData(firstname, null, null, null, null, null, null, null);
+    String lastname = element.getText();
+    String id = element.findElement(By.tagName("td")).findElement(By.tagName("input")).getAttribute("id");
+    ContactData contact = new ContactData(id, lastname, null, null, null, null, null, null, null);
     contacts.add(contact);
   }
   return contacts;
