@@ -4,7 +4,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.zt.addressbook.model.ContactData;
 import ru.zt.addressbook.model.GroupData;
-
 import java.util.HashSet;
 import java.util.List;
 
@@ -24,14 +23,7 @@ public void testAddNewCreation() {
   List<ContactData> after = app.getContactHelper().getContactList();
   Assert.assertEquals(after.size(), before.size() + 1);//проверка: кол-во контактов после добавление должно быть равно кол-ву контактов до добавления +1
 
-
-  int max=0;
-  for(ContactData c:after){
-    if(c.getId()>max){
-      max=c.getId();
-    }
-  }
-  contact.setId(max);
+  contact.setId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(),o2.getId())).get().getId());
   before.add(contact);
   Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
 }
