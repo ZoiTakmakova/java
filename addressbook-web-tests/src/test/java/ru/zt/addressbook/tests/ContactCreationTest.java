@@ -13,14 +13,14 @@ public class ContactCreationTest extends TestBase {
 
 @Test (enabled = false) /*ТЕСТ ОТКЛЮЧЕН*/
 public void testAddNewCreation() {
-  app.getNavigationHelper().gotoHomePage();
+  app.goTo().gotoHomePage();
   List<ContactData> before = app.getContactHelper().getContactList();
-  app.getNavigationHelper().gotoGroupPage();
-  if (!app.getGroupHelper().isThereAGroup()) {
-    app.getGroupHelper().createGroup(new GroupData("test1", "test2", "test3"));
+  app.goTo().groupPage();
+  if (!app.group().isThereAGroup()) {
+    app.group().create(new GroupData("test1", "test2", "test3"));
   }
   ContactData contact = new ContactData("Ivanov1", "Ivan1", null, null, null, null, null, "test1");
-  app.getNavigationHelper().gotoAddNewPage();
+  app.goTo().gotoAddNewPage();
   app.getContactHelper().createContact(contact, true);
   List<ContactData> after = app.getContactHelper().getContactList();
   Assert.assertEquals(after.size(), before.size() + 1);//проверка: кол-во контактов после добавление должно быть равно кол-ву контактов до добавления +1
