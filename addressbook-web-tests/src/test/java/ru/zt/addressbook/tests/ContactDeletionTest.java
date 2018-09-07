@@ -17,7 +17,7 @@ public void ContactDeletionTest() {
     app.goTo().gotoAddNewPage();
     if (!app.group().isThereAGroup()) {
       app.goTo().groupPage();
-      app.group().create(new GroupData("test1", "test2", "test3"));
+      app.group().create(new GroupData().withName("test1").withHeader("test2").withFooter("test3"));
     }
     app.goTo().gotoAddNewPage();
     app.getContactHelper().createContact(new ContactData("Ivanov23", "Ivan", "Ivanovich", null, "8956234", "89041235678", "ivanov@mail.ru", "test1"), true);

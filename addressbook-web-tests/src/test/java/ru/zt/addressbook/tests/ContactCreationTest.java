@@ -17,7 +17,7 @@ public void testAddNewCreation() {
   List<ContactData> before = app.getContactHelper().getContactList();
   app.goTo().groupPage();
   if (!app.group().isThereAGroup()) {
-    app.group().create(new GroupData("test1", "test2", "test3"));
+    app.group().create(new GroupData().withName("test1").withHeader("test2").withFooter("test3"));
   }
   ContactData contact = new ContactData("Ivanov1", "Ivan1", null, null, null, null, null, "test1");
   app.goTo().gotoAddNewPage();

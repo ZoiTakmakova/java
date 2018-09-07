@@ -20,7 +20,7 @@ public void testContactModification() {
     //если групп нет
     if (!app.group().isThereAGroup()) {
       //создаем новую группу
-      app.group().create(new GroupData("test1", "test2", "test3"));
+      app.group().create(new GroupData().withName("test1").withHeader("test2").withFooter("test3"));
     }
     //переходим на форму создания контаков
     app.goTo().gotoAddNewPage();
