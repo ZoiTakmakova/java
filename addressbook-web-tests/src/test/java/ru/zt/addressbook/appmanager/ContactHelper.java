@@ -16,14 +16,7 @@ public ContactHelper(WebDriver wd) {
   super(wd);
 }
 
-public void returnToHomePage() {
-
-  click(By.linkText("home page"));
-}
-
-public void submitAddNewCreation() {
-  click(By.xpath("//div[@id='content']/form/input[21]"));
-}
+public void returnToHomePage() {  click(By.linkText("home page"));}
 
 public void fillContactData(ContactData contactData, boolean creation) {
   type(By.name("firstname"), contactData.getFirstname());
@@ -33,6 +26,7 @@ public void fillContactData(ContactData contactData, boolean creation) {
   type(By.name("home"), contactData.getHomePhone());
   type(By.name("mobile"), contactData.getMobilePhone());
   type(By.name("email"), contactData.getEmail());
+
   //элемент из выпадающего списка
   if (creation) {
     new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
@@ -41,8 +35,13 @@ public void fillContactData(ContactData contactData, boolean creation) {
   }
 }
 
-public void selectContact(int index) {
-  wd.findElements(By.name("selected[]")).get(index).click();
+public void submitAddNewCreation() {
+  click(By.xpath("//div[@id='content']/form/input[21]"));
+}
+
+public void selectContact(int index) {  wd.findElements(By.name("selected[]")).get(index).click();}
+
+public void submitEditContact(int index) {wd.findElements(By.xpath("//img[@src='icons/pencil.png']")).get(index).click();
 }
 
 public void submitDeletionContact() {
@@ -53,11 +52,8 @@ public void completionDeletion() {
   wd.switchTo().alert().accept();
 }
 
-//исправить метод!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-public void submitEditContact(int index) {  click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));}
-//href="edit.php?id=112"
 
-public void submitUpDateContact() {
+  public void submitUpDateContact() {
   click(By.xpath("//div[@id='content']/form[1]/input[22]"));
 }
 
@@ -84,10 +80,12 @@ public List<ContactData> getContactList() {
   List<ContactData> contacts = new ArrayList<ContactData>();
   List<WebElement> elements = wd.findElements(By.name("entry"));
   for (WebElement element : elements) {
-    String lastname = element.getText();
     String id = element.findElement(By.tagName("td")).findElement(By.tagName("input")).getAttribute("id");
-    ContactData contact = new ContactData(id, lastname, null, null, null, null, null, null, null);
+    String lastname = element.findElement(By.xpath(".//td[2]")).getText();
+    String firstname = element.findElement(By.xpath(".//td[3]")).getText();
+    ContactData contact = new ContactData(id, lastname, firstname, null, null, null, null, null, null);
     contacts.add(contact);
+
   }
   return contacts;
 }

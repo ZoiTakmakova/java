@@ -32,7 +32,7 @@ public void testContactModification() {
   //выбираем контакт
   app.getContactHelper().selectContact(before.size()-1);
   app.getContactHelper().submitEditContact(before.size()-1);
-  ContactData contact = new ContactData(before.get(before.size()-1).getId(),"Ivanov2", null, null, null, null, null, null, null);
+  ContactData contact = new ContactData(before.get(before.size()-1).getId(),"Ivanov2", "Ivan2", null, null, null, null, null, null);
   app.getContactHelper().fillContactData(contact, false);
   app.getContactHelper().submitUpDateContact();
   app.getNavigationHelper().gotoHomePage();
