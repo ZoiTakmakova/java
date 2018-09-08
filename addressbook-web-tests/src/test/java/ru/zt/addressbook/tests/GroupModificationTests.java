@@ -1,11 +1,13 @@
 package ru.zt.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.zt.addressbook.model.GroupData;
+import ru.zt.addressbook.model.Groups;
 
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 public class GroupModificationTests extends TestBase {
 
@@ -21,18 +23,15 @@ public void ensurePrecondition() {
 @Test
 public void testGroupModification() {
 
-  Set<GroupData> before = app.group().all();//размер списка до модификации
+  Groups before = app.group().all();//размер списка до модификации
   GroupData modifiedGroup =  before.iterator().next();
   GroupData group = new GroupData()
           .withId(modifiedGroup.getId()).withName("test1").withHeader("test2").withFooter("test3");
   app.goTo().groupPage();
   app.group().modify(group);
-  Set<GroupData> after = app.group().all();//размер списка после модификации
-  Assert.assertEquals(after.size(), before.size());
-
-  before.remove(modifiedGroup);
-  before.add(group);
-   Assert.assertEquals(before, after);
+  Groups after = app.group().all();//размер списка после модификации
+  assertEquals(after.size(), before.size());
+  assertThat(after, equalTo(before.without(modifiedGroup).withAdded(group)));
 }
 }
 
