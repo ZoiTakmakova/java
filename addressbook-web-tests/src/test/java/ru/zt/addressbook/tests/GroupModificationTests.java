@@ -14,13 +14,13 @@ public class GroupModificationTests extends TestBase {
 @BeforeMethod
 public void ensurePrecondition() {
   app.goTo().groupPage();
-
   if (app.group().all().size() == 0) {
     app.group().create(new GroupData().withName("test1"));
   }
 }
 
-@Test
+@Test (enabled = false) /*ТЕСТ ОТКЛЮЧЕН*/
+
 public void testGroupModification() {
 
   Groups before = app.group().all();//размер списка до модификации

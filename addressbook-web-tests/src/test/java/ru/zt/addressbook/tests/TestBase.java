@@ -9,12 +9,12 @@ public class TestBase {
 
 protected static final ApplicationManager app = new ApplicationManager(BrowserType.CHROME);
 
-@BeforeSuite
+@BeforeSuite/*один запуск*/
 public void setUp() throws Exception {
   app.init();
 }
 
-@AfterSuite
+@AfterSuite/*один запуск*/
 public void tearDown() {
   app.stop();
 }

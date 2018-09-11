@@ -16,7 +16,9 @@ public ContactHelper(WebDriver wd) {
   super(wd);
 }
 
-public void returnToHomePage() {  click(By.linkText("home page"));}
+public void returnToHomePage() {
+  click(By.linkText("home page"));
+}
 
 public void fillContactData(ContactData contactData, boolean creation) {
   type(By.name("firstname"), contactData.getFirstname());
@@ -39,9 +41,12 @@ public void submitAddNewCreation() {
   click(By.xpath("//div[@id='content']/form/input[21]"));
 }
 
-public void selectContact(int index) {  wd.findElements(By.name("selected[]")).get(index).click();}
+public void selectContact(int index) {
+  wd.findElements(By.name("selected[]")).get(index).click();
+}
 
-public void submitEditContact(int index) {wd.findElements(By.xpath("//img[@src='icons/pencil.png']")).get(index).click();
+public void submitEditContact(int index) {
+  wd.findElements(By.xpath("//img[@src='icons/pencil.png']")).get(index).click();
 }
 
 public void submitDeletionContact() {
@@ -53,38 +58,48 @@ public void completionDeletion() {
 }
 
 
-  public void submitUpDateContact() {
+public void submitUpDateContact() {
   click(By.xpath("//div[@id='content']/form[1]/input[22]"));
 }
 
-public void createContact(ContactData contact, boolean b) {
+public void create(ContactData contact, boolean b) {
   fillContactData(contact, b);
   submitAddNewCreation();
   returnToHomePage();
 }
 
-public boolean isThereAContact() {
+public void modify(ContactData contact, int index) {
+  selectContact(index);
+  submitEditContact(index);
+  fillContactData(contact, false);
+  submitUpDateContact();
+  }
+
+public void delete(int index) {
+  selectContact(index);
+  submitDeletionContact();
+  completionDeletion();
+}
+
+public boolean isThereAGroup() {
   return isElementPresent(By.name("selected[]"));
 }
 
-//getContactCount - метод подсчета кол-ва контактов
 public int getContactCount() {
-  //findElements - возвращает список эл-ов
-  //size - получить размер
   return wd.findElements(By.name("selected[]")).size();
 
 }
 
 //формирование коллекции элементов
-public List<ContactData> getContactList() {
+public List<ContactData> list() {
   List<ContactData> contacts = new ArrayList<ContactData>();
   List<WebElement> elements = wd.findElements(By.name("entry"));
   for (WebElement element : elements) {
     int id = Integer.parseInt(element.findElement(By.tagName("td")).findElement(By.tagName("input")).getAttribute("id"));
     String lastname = element.findElement(By.xpath(".//td[2]")).getText();
     String firstname = element.findElement(By.xpath(".//td[3]")).getText();
-    ContactData contact = new ContactData(id, lastname, firstname, null, null, null, null, null, null);
-    contacts.add(contact);
+    //ContactData contact = new ContactData().withLastname("Ivanov1").withFirstName("Ivan1");
+    contacts.add(new ContactData().withLastname(lastname).withFirstName(firstname).withGroup("test1"));
 
   }
   return contacts;

@@ -55,7 +55,7 @@ public NavigationHelper goTo() {
   return navigationHelper;
 }
 
-public ContactHelper getContactHelper() {
+public ContactHelper contact() {
   return contactHelper;
 }
 }
