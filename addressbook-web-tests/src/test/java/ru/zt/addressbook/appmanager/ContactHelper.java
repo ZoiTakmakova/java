@@ -47,6 +47,10 @@ public void selectContact(int index) {
   wd.findElements(By.name("selected[]")).get(index).click();
 }
 
+public void selectContactById(int id) {
+  wd.findElement(By.cssSelector("input[value ='" + id + "']")).click();
+}
+
 public void submitEditContact(int index) {
   wd.findElements(By.xpath("//img[@src='icons/pencil.png']")).get(index).click();
 }
@@ -75,13 +79,20 @@ public void modify(ContactData contact, int index) {
   submitEditContact(index);
   fillContactData(contact, false);
   submitUpDateContact();
-  }
+}
 
 public void delete(int index) {
   selectContact(index);
   submitDeletionContact();
   completionDeletion();
 }
+
+public void delete(ContactData contact) {
+  selectContactById(contact.getId());
+  submitDeletionContact();
+  completionDeletion();
+}
+
 
 public boolean isThereAGroup() {
   return isElementPresent(By.name("selected[]"));
@@ -118,7 +129,7 @@ public Set<ContactData> all() {
   }
   return contacts;
 }
-
-
 }
+
+
 
