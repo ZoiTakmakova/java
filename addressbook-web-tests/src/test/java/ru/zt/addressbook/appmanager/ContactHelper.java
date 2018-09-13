@@ -8,7 +8,9 @@ import org.testng.Assert;
 import ru.zt.addressbook.model.ContactData;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends HelperBase {
 
@@ -98,9 +100,21 @@ public List<ContactData> list() {
     int id = Integer.parseInt(element.findElement(By.tagName("td")).findElement(By.tagName("input")).getAttribute("id"));
     String lastname = element.findElement(By.xpath(".//td[2]")).getText();
     String firstname = element.findElement(By.xpath(".//td[3]")).getText();
-    //ContactData contact = new ContactData().withLastname("Ivanov1").withFirstName("Ivan1");
     contacts.add(new ContactData().withLastname(lastname).withFirstName(firstname).withGroup("test1"));
+  }
+  return contacts;
+}
 
+
+//формирование коллекции элементов
+public Set<ContactData> all() {
+  Set<ContactData> contacts = new HashSet<ContactData>();
+  List<WebElement> elements = wd.findElements(By.name("entry"));
+  for (WebElement element : elements) {
+    int id = Integer.parseInt(element.findElement(By.tagName("td")).findElement(By.tagName("input")).getAttribute("id"));
+    String lastname = element.findElement(By.xpath(".//td[2]")).getText();
+    String firstname = element.findElement(By.xpath(".//td[3]")).getText();
+    contacts.add(new ContactData().withId(id).withLastname(lastname).withFirstName(firstname).withGroup("test1"));
   }
   return contacts;
 }
