@@ -51,8 +51,10 @@ public void selectContactById(int id) {
   wd.findElement(By.cssSelector("input[value ='" + id + "']")).click();
 }
 
-public void submitEditContact(int index) {
-  wd.findElements(By.xpath("//img[@src='icons/pencil.png']")).get(index).click();
+//public void submitEditContact(int id) {  wd.findElements(By.xpath("//img[@src='icons/pencil.png']")).get(id).click(); }
+
+public void submitEditContact(int id) {
+  wd.findElement(By.cssSelector("a[href ='edit.php?id="+id+"']")).click();
 }
 
 public void submitDeletionContact() {
@@ -74,9 +76,9 @@ public void create(ContactData contact, boolean b) {
   returnToHomePage();
 }
 
-public void modify(ContactData contact, int index) {
-  selectContact(index);
-  submitEditContact(index);
+public void modify(ContactData contact) {
+  selectContactById(contact.getId());
+  submitEditContact(contact.getId());
   fillContactData(contact, false);
   submitUpDateContact();
 }
