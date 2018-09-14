@@ -68,6 +68,7 @@ public void submitUpDateContact() {
 public void create(ContactData contact, boolean b) {
   fillContactData(contact, b);
   submitAddNewCreation();
+  contactCash = null;
   returnToHomePage();
 }
 
@@ -75,26 +76,35 @@ public void modify(ContactData contact) {
   selectContactById(contact.getId());
   submitEditContact(contact.getId());
   fillContactData(contact, false);
+  contactCash = null;
   submitUpDateContact();
 }
 
 public void delete(ContactData contact) {
   selectContactById(contact.getId());
   submitDeletionContact();
+  contactCash = null;
   completionDeletion();
 }
 
+private Contacts contactCash = null;
+
 //формирование коллекции элементов
 public Contacts all() {
+  if (contactCash != null) {
+    return new Contacts(contactCash);
+  }
+
+  contactCash = new Contacts();
   Contacts contacts = new Contacts();
   List<WebElement> elements = wd.findElements(By.name("entry"));
   for (WebElement element : elements) {
     int id = Integer.parseInt(element.findElement(By.tagName("td")).findElement(By.tagName("input")).getAttribute("id"));
     String lastname = element.findElement(By.xpath(".//td[2]")).getText();
     String firstname = element.findElement(By.xpath(".//td[3]")).getText();
-    contacts.add(new ContactData().withId(id).withLastname(lastname).withFirstName(firstname).withGroup("test1"));
+    contactCash.add(new ContactData().withId(id).withLastname(lastname).withFirstName(firstname).withGroup("test1"));
   }
-  return contacts;
+  return new Contacts(contactCash);
 }
 }
 

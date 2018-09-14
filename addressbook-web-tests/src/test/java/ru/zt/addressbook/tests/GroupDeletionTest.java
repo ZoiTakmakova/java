@@ -24,7 +24,8 @@ public  void  ensurePrecondition(){
   }
 }
 
-@Test (enabled = false) /*ТЕСТ ОТКЛЮЧЕН*/
+//@Test (enabled = false) /*ТЕСТ ОТКЛЮЧЕН*/
+@Test
 public void testGroupDeletion() {
   Groups before = app.group().all();//размер списка групп  до удаления
   GroupData deletedGroup =  before.iterator().next();

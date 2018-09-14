@@ -19,7 +19,7 @@ public void ensurePrecondition() {
   }
 }
 
-@Test(enabled = false) /*ТЕСТ ОТКЛЮЧЕН*/
+@Test
 
 public void testGroupModification() {
 

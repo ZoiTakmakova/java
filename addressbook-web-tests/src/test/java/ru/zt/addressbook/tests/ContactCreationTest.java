@@ -19,7 +19,7 @@ public void ensurePrecondition() {
 }
 
 @Test
-public void testAddNewCreation() {
+public void contactCreationTest() {
   app.goTo().homePage();
   Contacts before = app.contact().all();
   ContactData contact = new ContactData().withLastname("Ivanov1").withFirstName("Ivan1").withGroup("test1");
