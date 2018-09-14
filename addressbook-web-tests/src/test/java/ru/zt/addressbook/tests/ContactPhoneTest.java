@@ -5,7 +5,7 @@ import org.testng.annotations.Test;
 import ru.zt.addressbook.model.ContactData;
 import ru.zt.addressbook.model.GroupData;
 
-public class ContactPhoneTests extends TestBase {
+public class ContactPhoneTest extends TestBase {
 
 @BeforeMethod
 public void ensurePrecondition() {
@@ -22,10 +22,10 @@ public void ensurePrecondition() {
 }
 
 @Test
-public  void  testContactPhones(){
-    app.goTo().homePage();
-    ContactData contact = app.contact().all().iterator().next();
-    ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
-  }
+public  void  ContactPhoneTests(){
+  app.goTo().homePage();
+  ContactData contact = app.contact().all().iterator().next();
+  ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
+}
 
 }
