@@ -64,6 +64,12 @@ public boolean equals(Object o) {
   return name != null ? name.equals(groupData.name) : groupData.name == null;
 }
 
+/* hashCode - битовая строка фиксированной длины, полученная из массива произвольной длины
+hashCode — это целочисленный результат работы метода, которому в качестве входного параметра передан объект
+-Если hashCode разные, то и входные объекты гарантированно разные.
+-Если хhashCode равны, то входные объекты не всегда равны.
+Ситуация, когда у разных объектов одинаковые hashCode называется — коллизией.
+ */
 @Override
 public int hashCode() {
   int result = id;

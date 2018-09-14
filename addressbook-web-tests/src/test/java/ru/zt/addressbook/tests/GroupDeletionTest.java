@@ -31,7 +31,7 @@ public void testGroupDeletion() {
   GroupData deletedGroup =  before.iterator().next();
   app.group().delete(deletedGroup);
   Groups after = app.group().all();//размер списка групп после удаления
-  assertEquals(after.size(), before.size() - 1);
-  assertThat(after, equalTo(before.without(deletedGroup)));
+  assertThat(app.group().count(), equalTo(before.size() - 1));
+    assertThat(after, equalTo(before.without(deletedGroup)));
 }
 }
