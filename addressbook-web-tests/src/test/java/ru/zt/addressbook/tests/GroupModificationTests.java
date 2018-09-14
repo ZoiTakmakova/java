@@ -19,12 +19,12 @@ public void ensurePrecondition() {
   }
 }
 
-@Test (enabled = false) /*ТЕСТ ОТКЛЮЧЕН*/
+@Test(enabled = false) /*ТЕСТ ОТКЛЮЧЕН*/
 
 public void testGroupModification() {
 
   Groups before = app.group().all();//размер списка до модификации
-  GroupData modifiedGroup =  before.iterator().next();
+  GroupData modifiedGroup = before.iterator().next();
   GroupData group = new GroupData()
           .withId(modifiedGroup.getId()).withName("test1").withHeader("test2").withFooter("test3");
   app.goTo().groupPage();

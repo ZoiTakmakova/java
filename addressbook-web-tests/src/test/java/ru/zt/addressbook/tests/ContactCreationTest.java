@@ -1,13 +1,13 @@
 package ru.zt.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.zt.addressbook.model.ContactData;
+import ru.zt.addressbook.model.Contacts;
 import ru.zt.addressbook.model.GroupData;
 
-import java.util.HashSet;
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreationTest extends TestBase {
 @BeforeMethod
@@ -21,16 +21,14 @@ public void ensurePrecondition() {
 @Test
 public void testAddNewCreation() {
   app.goTo().homePage();
-  Set<ContactData> before = app.contact().all();
+  Contacts before = app.contact().all();
   ContactData contact = new ContactData().withLastname("Ivanov1").withFirstName("Ivan1").withGroup("test1");
   app.goTo().gotoAddNewPage();
   app.contact().create(contact, true);
-  Set<ContactData> after = app.contact().all();
-  Assert.assertEquals(after.size(), before.size() + 1);//проверка: кол-во контактов после добавление
-  // должно быть равно кол-ву контактов до добавления +1
+  Contacts after = app.contact().all();
+  assertThat(after.size(), equalTo(before.size() + 1));
 
-  contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt());
-  before.add(contact);
-  Assert.assertEquals(before, after);
+  assertThat(after, equalTo(
+          before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
 }
 }
