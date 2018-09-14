@@ -51,6 +51,9 @@ public void selectContactById(int id) {
 
 public void submitEditContact(int id) {
   wd.findElement(By.cssSelector("a[href ='edit.php?id=" + id + "']")).click();
+  //wd.findElement(By.xpath(String.format("//input[@value='%s']/../../td[8]/a",id))).click();
+  //wd.findElement(By.xpath(String.format("//tr[.//input[@value='%s']]/td[8]/a",id))).click();
+  //wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']",id))).click();
 }
 
 public void submitDeletionContact() {
@@ -100,7 +103,6 @@ public Contacts all() {
   if (contactCash != null) {
     return new Contacts(contactCash);
   }
-
   contactCash = new Contacts();
   Contacts contacts = new Contacts();
   List<WebElement> elements = wd.findElements(By.name("entry"));
@@ -112,6 +114,27 @@ public Contacts all() {
   }
   return new Contacts(contactCash);
 }
+
+public ContactData infoFromEditForm(ContactData contact) {
+  initContactModificationById(contact.getId());
+  String firstname = wd.findElement(By.name("firstname")).getAttribute("value");
+  String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
+  String home = wd.findElement(By.name("home")).getAttribute("value");
+  String mobiele = wd.findElement(By.name("mobiele")).getAttribute("value");
+  String work = wd.findElement(By.name("work")).getAttribute("value");
+  wd.navigate().back();
+  return  new ContactData().withId(contact.getId()).withFirstName(firstname).withLastname(lastname).
+          withHomePhone(home).withMobilePhone(mobiele).withWorkPhone(work);
+}
+
+private void initContactModificationById(int id) {
+  WebElement checkbox = wd.findElement(By.cssSelector(String.format("input[value='%s']",id)));
+  WebElement row = checkbox.findElement(By.xpath("./../.."));
+  List<WebElement> cells = row.findElements(By.tagName("td"));
+  cells.get(7).findElement(By.tagName("a")).click();
+}
+
+
 }
 
 

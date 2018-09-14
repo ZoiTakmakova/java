@@ -30,7 +30,8 @@ public void ensurePrecondition() {
       app.group().create(new GroupData().withName("test1").withHeader("test2").withFooter("test3"));
     }
     app.goTo().gotoAddNewPage();
-    app.contact().create(new ContactData().withLastname("Ivanov1").withFirstName("Ivan1").withGroup("test1"), true);
+    app.contact().create(new ContactData().withLastname("Ivanov1").withFirstName("Ivan1").
+            withHomePhone("111111").withMobilePhone("22222").withWorkPhone("33333").withGroup("test1"), true);
   }
 }
 
@@ -40,7 +41,8 @@ public void testContactModification() {
   app.goTo().homePage();
   Contacts before = app.contact().all();
   ContactData modifiedContact = before.iterator().next();
-  ContactData contact = new ContactData().withId(modifiedContact.getId()).withLastname("Ivanov2").withFirstName("Ivan2").withGroup("test1");
+  ContactData contact = new ContactData().withId(modifiedContact.getId()).withLastname("Ivanov2").withFirstName("Ivan2").
+          withHomePhone("111111").withMobilePhone("22222").withWorkPhone("33333").withGroup("test1");
   app.contact().modify(contact);
   app.goTo().homePage();
   assertThat(app.contact().count(),equalTo(before.size()));

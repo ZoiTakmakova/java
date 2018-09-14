@@ -29,7 +29,8 @@ public void ensurePrecondition() {
       app.group().create(new GroupData().withName("test1").withHeader("test2").withFooter("test3"));
     }
     app.goTo().gotoAddNewPage();
-    app.contact().create(new ContactData().withLastname("Ivanov1").withGroup("test1"), true);
+    app.contact().create(new ContactData().withLastname("Ivanov1").withFirstName("Ivan1").
+            withHomePhone("111111").withMobilePhone("22222").withWorkPhone("33333").withGroup("test1"), true);
   }
 }
 

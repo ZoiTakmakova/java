@@ -10,6 +10,7 @@ private String lastname;
 private String address;
 private String homePhone;
 private String mobilePhone;
+private String workPhone;
 private String email;
 private String group;
 
@@ -78,6 +79,11 @@ public ContactData withMobilePhone(String mobilePhone) {
   return this;
 }
 
+public ContactData withWorkPhone(String workPhone) {
+  this.workPhone = workPhone;
+  return this;
+}
+
 public ContactData withEmail(String email) {
   this.email = email;
   return this;
@@ -102,6 +108,10 @@ public String getHomePhone() {
 
 public String getMobilePhone() {
   return mobilePhone;
+}
+
+public String getWorkPhone() {
+  return workPhone;
 }
 
 public String getEmail() {  return email;
