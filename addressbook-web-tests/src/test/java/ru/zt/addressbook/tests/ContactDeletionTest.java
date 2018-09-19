@@ -41,8 +41,9 @@ public void ContactDeletionTest() {
   ContactData deletedContact = before.iterator().next();
   app.contact().delete(deletedContact);
   app.goTo().homePage();
-  assertThat(app.contact().count(),equalTo(before.size()-1));
   Contacts after = app.contact().all();
+  assertEquals(after.size(), before.size() - 1);//проверка: кол-во контактов после удаления должно быть равно кол-ву контактов до удаления  -1
+
   assertThat(after, equalTo(before.without(deletedContact)));
 }
 }

@@ -45,8 +45,9 @@ public void testContactModification() {
           withHomePhone("111111").withMobilePhone("22222").withWorkPhone("33333").withGroup("test1");
   app.contact().modify(contact);
   app.goTo().homePage();
-  assertThat(app.contact().count(),equalTo(before.size()));
   Contacts after = app.contact().all();
+  assertEquals(after.size(), before.size());
+
   assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
 }
 }

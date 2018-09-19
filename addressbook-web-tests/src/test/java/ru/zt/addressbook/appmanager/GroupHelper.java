@@ -81,8 +81,7 @@ public boolean isThereAGroup() {
   return isElementPresent(By.name("selected[]"));
 }
 
-public int count() {
-
+public int getGroupCount() {
   return wd.findElements(By.name("selected[]")).size();
 }
 

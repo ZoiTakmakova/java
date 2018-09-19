@@ -90,12 +90,6 @@ public void delete(ContactData contact) {
   completionDeletion();
 }
 
-public int count() {
-
-  return wd.findElements(By.name("selected[]")).size();
-}
-
-
 private Contacts contactCash = null;
 
 //формирование коллекции элементов
