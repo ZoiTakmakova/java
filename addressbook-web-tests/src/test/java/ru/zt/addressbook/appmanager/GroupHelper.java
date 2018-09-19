@@ -57,6 +57,7 @@ public void create(GroupData group) {
   initGroupCreation();
   fillGroupForm(group);
   submitGroupCreation();
+  //зачистка кэша
   groupCash = null;
   returnToGroupPage();
 }
@@ -66,6 +67,7 @@ public void modify(GroupData group) {
   initGroupModification();// редактировать группу
   fillGroupForm(group);//заполнить группу
   submitGroupModification();//обновить группу
+  //зачистка кэша
   groupCash = null;
   returnToGroupPage();
 }
@@ -73,6 +75,7 @@ public void modify(GroupData group) {
 public void delete(GroupData group) {
   selectGroupById(group.getId());
   deleteSelectedGroups();
+  //зачистка кэша
   groupCash = null;
   returnToGroupPage();
 }
@@ -81,7 +84,7 @@ public boolean isThereAGroup() {
   return isElementPresent(By.name("selected[]"));
 }
 
-public int getGroupCount() {
+public int count() {
   return wd.findElements(By.name("selected[]")).size();
 }
 
@@ -89,10 +92,12 @@ public int getGroupCount() {
 private Groups groupCash = null;
 
 public Groups all() {
+  //если кэш не пустой
   if (groupCash != null) {
+    //возвращаем его копию
     return new Groups(groupCash);
   }
-
+  //иначе считываем список групп со страницы веб-приложения
   groupCash = new Groups();
   List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
   for (WebElement element : elements) {

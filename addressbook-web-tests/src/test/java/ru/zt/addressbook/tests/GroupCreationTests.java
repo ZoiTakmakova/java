@@ -23,4 +23,16 @@ public void testGroupCreation() {
           before.withAdded(group.withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt()))));
 
 }
+
+@Test
+public void testBadGroupCreation() {
+  app.goTo().groupPage();
+  Groups before = app.group().all();//размер множеста до создания
+  GroupData group = new GroupData().withName("test2'");
+  app.group().create(group);
+  assertThat(app.group().count(), equalTo(before.size()));
+  Groups after = app.group().all();//размер множества после создания
+  assertThat(after, equalTo(before));
+
+}
 }

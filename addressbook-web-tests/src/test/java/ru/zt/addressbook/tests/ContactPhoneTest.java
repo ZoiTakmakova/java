@@ -22,9 +22,11 @@ public void ensurePrecondition() {
 }
 
 @Test
-public  void  ContactPhoneTests(){
+public  void  testContactPhone(){
   app.goTo().homePage();
-  ContactData contact = app.contact().all().iterator().next();
+  ContactData contact = app.contact().all().iterator().next(); //загрузка множество контактов[all()], и выбираем
+  // какой-то контактслучайным[.iterator().next()]
+  //infoFromEditForm(contact) - метод загрузки информации из формы редактирования контактов
   ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
 }
 

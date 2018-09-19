@@ -92,7 +92,7 @@ public void delete(ContactData contact) {
 
 private Contacts contactCash = null;
 
-//формирование коллекции элементов
+//формирование множества контактов
 public Contacts all() {
   if (contactCash != null) {
     return new Contacts(contactCash);
@@ -110,7 +110,7 @@ public Contacts all() {
 }
 
 public ContactData infoFromEditForm(ContactData contact) {
-  initContactModificationById(contact.getId());
+  initContactModificationById(contact.getId());//выбор контакта по идентификатору
   String firstname = wd.findElement(By.name("firstname")).getAttribute("value");
   String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
   String home = wd.findElement(By.name("home")).getAttribute("value");
@@ -121,10 +121,15 @@ public ContactData infoFromEditForm(ContactData contact) {
           withHomePhone(home).withMobilePhone(mobiele).withWorkPhone(work);
 }
 
+//выбор контакта по идентификатору
 private void initContactModificationById(int id) {
+  //находим чек-бокс
   WebElement checkbox = wd.findElement(By.cssSelector(String.format("input[value='%s']",id)));
+  //далее переходим к родительскому эл-ту относительно чек-бокса [input(чек-бокс)-->td(ячейка)-->tr(строка)]
   WebElement row = checkbox.findElement(By.xpath("./../.."));
+  //берем полный список ячеек, те ищем в строке все элементы, которые имеют тег "td"
   List<WebElement> cells = row.findElements(By.tagName("td"));
+  //среди этих ячеек берем по номеру [get(7)] нужную, внутри ячейки находим ссылку с тегом "а"
   cells.get(7).findElement(By.tagName("a")).click();
 }
 

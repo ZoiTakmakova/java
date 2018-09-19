@@ -29,8 +29,8 @@ public void testGroupModification() {
           .withId(modifiedGroup.getId()).withName("test1").withHeader("test2").withFooter("test3");
   app.goTo().groupPage();
   app.group().modify(group);
+  assertEquals(app.group().count(), before.size());
   Groups after = app.group().all();//размер списка после модификации
-  assertEquals(after.size(), before.size());
   assertThat(after, equalTo(before.without(modifiedGroup).withAdded(group)));
 }
 }
