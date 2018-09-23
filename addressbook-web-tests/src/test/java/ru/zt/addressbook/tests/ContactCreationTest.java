@@ -22,7 +22,8 @@ public void ensurePrecondition() {
 public void contactCreationTest() {
   app.goTo().homePage();
   Contacts before = app.contact().all();
-  ContactData contact = new ContactData().withLastname("Ivanov1").withFirstName("Ivan1").withGroup("test1");
+  ContactData contact = new ContactData().withLastname("Ivanov1").withFirstName("Ivan1")
+          .withHomePhone("111").withMobilePhone("222").withWorkPhone("333").withGroup("test1");
   app.goTo().gotoAddNewPage();
   app.contact().create(contact, true);
   Contacts after = app.contact().all();

@@ -27,6 +27,7 @@ public void fillContactData(ContactData contactData, boolean creation) {
   type(By.name("address"), contactData.getAddress());
   type(By.name("home"), contactData.getHomePhone());
   type(By.name("mobile"), contactData.getMobilePhone());
+  type(By.name("work"), contactData.getWorkPhone());
   type(By.name("email"), contactData.getEmail());
 
   //элемент из выпадающего списка
@@ -104,7 +105,9 @@ public Contacts all() {
     int id = Integer.parseInt(element.findElement(By.tagName("td")).findElement(By.tagName("input")).getAttribute("id"));
     String lastname = element.findElement(By.xpath(".//td[2]")).getText();
     String firstname = element.findElement(By.xpath(".//td[3]")).getText();
-    contactCash.add(new ContactData().withId(id).withLastname(lastname).withFirstName(firstname).withGroup("test1"));
+    String[] phones = element.findElement(By.xpath(".//td[6]")).getText().split("\n");
+    contactCash.add(new ContactData().withId(id).withLastname(lastname).withFirstName(firstname)
+            .withHomePhone(phones[0]).withMobilePhone(phones[1]).withWorkPhone(phones[2]).withGroup("test1"));
   }
   return new Contacts(contactCash);
 }
@@ -114,11 +117,11 @@ public ContactData infoFromEditForm(ContactData contact) {
   String firstname = wd.findElement(By.name("firstname")).getAttribute("value");
   String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
   String home = wd.findElement(By.name("home")).getAttribute("value");
-  String mobiele = wd.findElement(By.name("mobiele")).getAttribute("value");
+  String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
   String work = wd.findElement(By.name("work")).getAttribute("value");
   wd.navigate().back();
   return  new ContactData().withId(contact.getId()).withFirstName(firstname).withLastname(lastname).
-          withHomePhone(home).withMobilePhone(mobiele).withWorkPhone(work);
+          withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work);
 }
 
 //выбор контакта по идентификатору
