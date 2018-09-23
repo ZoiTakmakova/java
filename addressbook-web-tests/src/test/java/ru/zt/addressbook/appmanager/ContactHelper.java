@@ -28,7 +28,9 @@ public void fillContactData(ContactData contactData, boolean creation) {
   type(By.name("home"), contactData.getHomePhone());
   type(By.name("mobile"), contactData.getMobilePhone());
   type(By.name("work"), contactData.getWorkPhone());
-  type(By.name("email"), contactData.getEmail());
+  type(By.name("email_1"), contactData.getEmail_1());
+  type(By.name("email_2"), contactData.getEmail_2());
+  type(By.name("email_3"), contactData.getEmail_3());
 
   //элемент из выпадающего списка
   if (creation) {
@@ -105,8 +107,9 @@ public Contacts all() {
     int id = Integer.parseInt(element.findElement(By.tagName("td")).findElement(By.tagName("input")).getAttribute("id"));
     String lastname = element.findElement(By.xpath(".//td[2]")).getText();
     String firstname = element.findElement(By.xpath(".//td[3]")).getText();
+    String allEmail = element.findElement(By.xpath(".//td[5]")).getText();
     String allPhones = element.findElement(By.xpath(".//td[6]")).getText();
-    contactCash.add(new ContactData().withId(id).withLastname(lastname).withFirstName(firstname)
+    contactCash.add(new ContactData().withId(id).withLastname(lastname).withFirstName(firstname).withEmail(allEmail)
             .withAllPhones(allPhones));
   }
   return new Contacts(contactCash);
@@ -116,12 +119,16 @@ public ContactData infoFromEditForm(ContactData contact) {
   initContactModificationById(contact.getId());//выбор контакта по идентификатору
   String firstname = wd.findElement(By.name("firstname")).getAttribute("value");
   String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
+  String email_1 = wd.findElement(By.name("email")).getAttribute("value");
+  String email_2 = wd.findElement(By.name("email2")).getAttribute("value");
+  String email_3 = wd.findElement(By.name("email3")).getAttribute("value");
   String home = wd.findElement(By.name("home")).getAttribute("value");
   String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
   String work = wd.findElement(By.name("work")).getAttribute("value");
   wd.navigate().back();
-  return  new ContactData().withId(contact.getId()).withFirstName(firstname).withLastname(lastname).
-          withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work);
+  return  new ContactData().withId(contact.getId()).withFirstName(firstname).withLastname(lastname)
+          .withEmail_1(email_1).withEmail_2(email_2).withEmail_3(email_3)
+          .withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work);
 }
 
 //выбор контакта по идентификатору
