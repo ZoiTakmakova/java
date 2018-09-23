@@ -107,10 +107,11 @@ public Contacts all() {
     int id = Integer.parseInt(element.findElement(By.tagName("td")).findElement(By.tagName("input")).getAttribute("id"));
     String lastname = element.findElement(By.xpath(".//td[2]")).getText();
     String firstname = element.findElement(By.xpath(".//td[3]")).getText();
+    String address = element.findElement(By.xpath(".//td[4]")).getText();
     String allEmail = element.findElement(By.xpath(".//td[5]")).getText();
     String allPhones = element.findElement(By.xpath(".//td[6]")).getText();
-    contactCash.add(new ContactData().withId(id).withLastname(lastname).withFirstName(firstname).withEmail(allEmail)
-            .withAllPhones(allPhones));
+    contactCash.add(new ContactData().withId(id).withLastname(lastname).withFirstName(firstname).withAddress(address)
+            .withEmail(allEmail).withAllPhones(allPhones));
   }
   return new Contacts(contactCash);
 }
@@ -119,6 +120,7 @@ public ContactData infoFromEditForm(ContactData contact) {
   initContactModificationById(contact.getId());//выбор контакта по идентификатору
   String firstname = wd.findElement(By.name("firstname")).getAttribute("value");
   String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
+  String address = wd.findElement(By.name("address")).getAttribute("value");
   String email_1 = wd.findElement(By.name("email")).getAttribute("value");
   String email_2 = wd.findElement(By.name("email2")).getAttribute("value");
   String email_3 = wd.findElement(By.name("email3")).getAttribute("value");
@@ -126,7 +128,7 @@ public ContactData infoFromEditForm(ContactData contact) {
   String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
   String work = wd.findElement(By.name("work")).getAttribute("value");
   wd.navigate().back();
-  return  new ContactData().withId(contact.getId()).withFirstName(firstname).withLastname(lastname)
+  return  new ContactData().withId(contact.getId()).withFirstName(firstname).withLastname(lastname).withAddress(address)
           .withEmail_1(email_1).withEmail_2(email_2).withEmail_3(email_3)
           .withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work);
 }
