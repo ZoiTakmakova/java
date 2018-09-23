@@ -7,6 +7,9 @@ import org.testng.annotations.Test;
 import ru.zt.addressbook.model.ContactData;
 import ru.zt.addressbook.model.GroupData;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.*;
 
@@ -33,14 +36,24 @@ public  void  testContactPhone(){
   // какой-то контактслучайным[.iterator().next()]
   //infoFromEditForm(contact) - метод загрузки информации из формы редактирования контактов
   ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
+//сравниваем телефоны, полученные с главной страницы с очищенной строчкой
+  assertThat(contact.getAllPhones(), equalTo(mergePhones(contactInfoFromEditForm)));
 
-  assertThat(contact.getHomePhone(), equalTo(cleaned(contactInfoFromEditForm.getHomePhone())));
-  assertThat(contact.getMobilePhone(), equalTo(cleaned(contactInfoFromEditForm.getMobilePhone())));
-  assertThat(contact.getWorkPhone(), equalTo(cleaned(contactInfoFromEditForm.getWorkPhone())));
+}
+
+private <T> String mergePhones(ContactData contact) {
+
+  return Arrays.asList(contact.getHomePhone(),contact.getMobilePhone(),contact.getWorkPhone())
+          //отфильтровываем строки
+          .stream().filter((s)->!s.equals(""))
+          //применяем функцию очистки
+          .map(ContactPhoneTest::cleaned)
+          //собираем 1 строчку из очищенных телефонов
+          .collect(Collectors.joining("\n"));
 }
 
 //функция, удаляющая ненужные символы
- public  String cleaned(String phone){
+ public static String cleaned(String phone){
   return phone.replaceAll("\\s","").replaceAll("[-()]","");
  }
 
