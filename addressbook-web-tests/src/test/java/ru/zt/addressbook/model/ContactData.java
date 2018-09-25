@@ -1,11 +1,20 @@
 package ru.zt.addressbook.model;
 
+import java.io.File;
+
 public class ContactData {
 
 
 private int id =  Integer.MAX_VALUE;
 private String firstname;
 private String middlename;
+
+
+public ContactData withPhoto(File photo) {
+  this.photo = photo;
+  return this;
+}
+
 private String lastname;
 private String address;
 private String homePhone;
@@ -16,8 +25,9 @@ private String email_1;
 private String email_2;
 private String email_3;
 private String allEmail;
+private File photo;
 
-
+public File getPhoto() {  return photo;}
 
 public String getEmail_1() {  return email_1;}
 

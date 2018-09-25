@@ -28,9 +28,10 @@ public void fillContactData(ContactData contactData, boolean creation) {
   type(By.name("home"), contactData.getHomePhone());
   type(By.name("mobile"), contactData.getMobilePhone());
   type(By.name("work"), contactData.getWorkPhone());
-  type(By.name("email_1"), contactData.getEmail_1());
-  type(By.name("email_2"), contactData.getEmail_2());
-  type(By.name("email_3"), contactData.getEmail_3());
+  type(By.name("email"), contactData.getEmail_1());
+  type(By.name("email2"), contactData.getEmail_2());
+  type(By.name("email3"), contactData.getEmail_3());
+  attach(By.name("photo"), contactData.getPhoto());
 
   //элемент из выпадающего списка
   if (creation) {
