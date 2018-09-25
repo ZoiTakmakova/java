@@ -22,6 +22,16 @@ public GroupData withName(String name) {
   return this;//позволяет вызывать каскады - вытягивать методы в цепочку
 }
 
+@Override
+public String toString() {
+  return "GroupData{" +
+          "id=" + id +
+          ", name='" + name + '\'' +
+          ", header='" + header + '\'' +
+          ", footer='" + footer + '\'' +
+          '}';
+}
+
 public GroupData withHeader(String header) {
   this.header = header;
   return this;//позволяет вызывать каскады - вытягивать методы в цепочку
@@ -44,14 +54,6 @@ public String getFooter() {
   return footer;
 }
 
-
-@Override
-public String toString() {
-  return "GroupData{" +
-          "id=" + id +
-          ", name='" + name + '\'' +
-          '}';
-}
 
 @Override
 public boolean equals(Object o) {
