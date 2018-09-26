@@ -102,7 +102,7 @@ public ContactData withId(int id) {
   return this;
 }
 
-public ContactData withFirstName(String firstname) {
+public ContactData withFirstname(String firstname) {
   this.firstname = firstname;
   return this;
 }

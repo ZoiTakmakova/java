@@ -111,7 +111,7 @@ public Contacts all() {
     String address = element.findElement(By.xpath(".//td[4]")).getText();
     String allEmail = element.findElement(By.xpath(".//td[5]")).getText();
     String allPhones = element.findElement(By.xpath(".//td[6]")).getText();
-    contactCash.add(new ContactData().withId(id).withLastname(lastname).withFirstName(firstname).withAddress(address)
+    contactCash.add(new ContactData().withId(id).withLastname(lastname).withFirstname(firstname).withAddress(address)
             .withEmail(allEmail).withAllPhones(allPhones));
   }
   return new Contacts(contactCash);
@@ -129,7 +129,7 @@ public ContactData infoFromEditForm(ContactData contact) {
   String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
   String work = wd.findElement(By.name("work")).getAttribute("value");
   wd.navigate().back();
-  return  new ContactData().withId(contact.getId()).withFirstName(firstname).withLastname(lastname).withAddress(address)
+  return  new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname).withAddress(address)
           .withEmail_1(email_1).withEmail_2(email_2).withEmail_3(email_3)
           .withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work);
 }
