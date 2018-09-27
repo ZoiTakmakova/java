@@ -7,7 +7,7 @@ import ru.zt.addressbook.model.ContactData;
 import ru.zt.addressbook.model.Contacts;
 import ru.zt.addressbook.model.GroupData;
 
-import java.io.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -24,15 +24,11 @@ public void ensurePrecondition() {
   }
 }
 @DataProvider
-public Iterator<Object[]> validContacts() throws IOException {
+public Iterator<Object[]> validContacts(){
   List<Object[]> list = new ArrayList<Object[]>();
-  BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.csv")));
-  String line = reader.readLine();
-  while (line != null){
-    String[] split = line.split(";");
-    list.add(new Object[]{new ContactData().withLastname(split[0]).withFirstname(split[1]).withGroup(split[3])});
-    line = reader.readLine();
-  }
+  list.add(new Object[] {new ContactData().withLastname("Ivanov1").withFirstname("Ivan1").withGroup("test1")});
+  list.add(new Object[] {new ContactData().withLastname("Ivanov2").withFirstname("Ivan2").withGroup("test1")});
+  list.add(new Object[] {new ContactData().withLastname("Ivanov3").withFirstname("Ivan3").withGroup("test1")});
   return  list.iterator();
 }
 
