@@ -18,7 +18,6 @@ import java.util.List;
 
 public class GroupDataGenerator {
 
-
 @Parameter(names = "-c", description = "Group count")
 public int count;
 
@@ -37,7 +36,6 @@ public static void main(String[] args) throws IOException {
     jCommander.usage();
     return;
   }
-
   generator.run();
 }
 

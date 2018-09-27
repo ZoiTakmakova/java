@@ -59,7 +59,7 @@ private List<ContactData> generateContacts(int count) {
     for (int i=0;i<count;i++){
       contacts.add(new ContactData().withLastname(String.format("Lastname %s", i)).withFirstname(String.format("Firstname %s", i))
               .withAddress(String.format("Address %s", i)).withEmail_1(String.format("Email_1 %s", i)).withEmail_2(String.format("Email_2 %s", i)).withEmail_3(String.format("Email_3 %s", i)).withHomePhone(String.format("withHomePhone %s", i))
-              .withMobilePhone(String.format("MobilePhone %s", i)).withWorkPhone(String.format("withWorkPhone %s", i)).withGroup((String.format("group1 %s", i))));
+              .withMobilePhone(String.format("MobilePhone %s", i)).withWorkPhone(String.format("withWorkPhone %s", i)).withGroup((String.format("test %s", i))));
     }
   return contacts;
 }
