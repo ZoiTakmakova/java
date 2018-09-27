@@ -61,12 +61,12 @@ private void saveAsJson(List<GroupData> groups, File file) throws IOException {
 }
 
 private void saveAsXml(List<GroupData> groups, File file) throws IOException {
-  XStream xstream = new XStream();
-  xstream.processAnnotations(GroupData.class);
-  String xml = xstream.toXML(groups);
-  Writer writer = new FileWriter(file);
-  writer.write(xml);
-  writer.close();
+    XStream xstream = new XStream();
+    xstream.processAnnotations(GroupData.class);
+    String xml = xstream.toXML(groups);
+    Writer writer = new FileWriter(file);
+    writer.write(xml);
+    writer.close();
 }
 
 private void saveAsCsv(List<GroupData> groups, File file) throws IOException {
