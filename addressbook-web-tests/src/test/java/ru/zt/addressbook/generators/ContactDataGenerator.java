@@ -3,6 +3,8 @@ package ru.zt.addressbook.generators;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.thoughtworks.xstream.XStream;
 import ru.zt.addressbook.model.ContactData;
 import ru.zt.addressbook.model.GroupData;
@@ -50,12 +52,23 @@ private void run() throws IOException {
   }else if (format.equals("xml")){
     //2 часть: запись данных в файл xml
     saveAsXml(contacts, new File(file));
+  }else if (format.equals("json")){
+    //2 часть: запись данных в файл xml
+    saveAsJson(contacts, new File(file));
   }else {
     System.out.println("Unrecognized format" + format);
   }
   }
 
-  //1й парамектр: список контактов, который нужно сохранять, 2й параметр файл в который нужно сохранять
+private void saveAsJson(List<ContactData> contacts, File file) throws IOException {
+  Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
+  String json = gson.toJson(contacts);
+  Writer writer = new FileWriter(file);
+  writer.write(json);
+  writer.close();
+}
+
+//1й парамектр: список контактов, который нужно сохранять, 2й параметр файл в который нужно сохранять
 private void saveAsXml(List<ContactData> contacts, File file) throws IOException {
     //создаем объект типа XStream
   XStream xstream = new XStream();

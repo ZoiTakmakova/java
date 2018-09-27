@@ -1,5 +1,6 @@
 package ru.zt.addressbook.model;
 
+import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
@@ -8,28 +9,40 @@ import java.io.File;
 @XStreamAlias("contact")
 public class ContactData {
 @XStreamOmitField
-
 private int id =  Integer.MAX_VALUE;
+@Expose
 private String firstname;
+@Expose
 private String middlename;
-
+@Expose
+private String lastname;
+@Expose
+private String address;
+@Expose
+private String homePhone;
+@Expose
+private String mobilePhone;
+@Expose
+private String workPhone;
+@Expose
+private String allPhones;
+@Expose
+private String email_1;
+@Expose
+private String email_2;
+@Expose
+private String email_3;
+@Expose
+private String allEmail;
+@Expose
+private File photo;
+@Expose
+private String group;
 
 public ContactData withPhoto(File photo) {
   this.photo = photo;
   return this;
 }
-
-private String lastname;
-private String address;
-private String homePhone;
-private String mobilePhone;
-private String workPhone;
-private String allPhones;
-private String email_1;
-private String email_2;
-private String email_3;
-private String allEmail;
-private File photo;
 
 public File getPhoto() {  return photo;}
 
@@ -59,8 +72,6 @@ public String getWorkPhone() {
   return workPhone;
 }
 
-private String group;
-
 public String getGroup() {
   return group;
 }
@@ -78,7 +89,6 @@ public String getFirstname() {
 public String getMiddlename() {
   return middlename;
 }
-
 
 
 public ContactData withEmail_1(String email_1) {
@@ -120,8 +130,6 @@ public ContactData withLastname(String lastname) {
   this.lastname = lastname;
   return this;
 }
-
-
 
 public ContactData withAddress(String address) {
   this.address = address;
