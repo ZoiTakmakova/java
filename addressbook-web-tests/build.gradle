@@ -15,21 +15,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.6.1'
 }
 
-//запуск тестов через КС
-tasK testGroups(type: Test) {
-    useTestNG() {
-        suites 'src/test/resources/testng-groups.xml'
-    }
-    if(project.hasProperty('browser')){
-        systemProperty 'browser',"${browser}"
-    }
-    if(project.hasProperty('target')){
-        systemProperty 'target',"${target}"
-    }
-
-
-}
-tasK testContacts(type: Test) {
+task testContacts(type: Test) {
     useTestNG() {
         suites 'src/test/resources/testng-contacts.xml'
     }
@@ -41,3 +27,16 @@ tasK testContacts(type: Test) {
     }
 
 }
+//запуск тестов через КС
+task testGroups(type: Test) {
+    useTestNG() {
+        suites 'src/test/resources/testng-groups.xml'
+    }
+    if(project.hasProperty('browser')){
+        systemProperty 'browser',"${browser}"
+    }
+    if(project.hasProperty('target')){
+        systemProperty 'target',"${target}"
+    }
+}
+
