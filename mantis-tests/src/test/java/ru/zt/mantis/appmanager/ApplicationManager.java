@@ -46,6 +46,12 @@ public void init() throws IOException {
 public void stop(){
   wd.quit();
 }
+public HttpSession newSession(){
+  return new HttpSession(this);
+}
+public String getProperty(String key){
+  return properties.getProperty(key);
+}
 
 
 }
