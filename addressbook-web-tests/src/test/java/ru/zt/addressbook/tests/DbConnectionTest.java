@@ -27,6 +27,7 @@ public void testDbConnextion() {
     System.out.println(groups);
     // Do something with the Connection
 
+
   } catch (SQLException ex) {
     // handle any errors
     System.out.println("SQLException: " + ex.getMessage());
