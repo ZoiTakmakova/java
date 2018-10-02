@@ -31,7 +31,7 @@ public void fillContactData(ContactData contactData, boolean creation) {
   type(By.name("email"), contactData.getEmail_1());
   type(By.name("email2"), contactData.getEmail_2());
   type(By.name("email3"), contactData.getEmail_3());
-  attach(By.name("photo"), contactData.getPhoto());
+ // attach(By.name("photo"), contactData.getPhoto());
 
   //элемент из выпадающего списка
   if (creation) {
@@ -145,6 +145,7 @@ private void initContactModificationById(int id) {
   //среди этих ячеек берем по номеру [get(7)] нужную, внутри ячейки находим ссылку с тегом "а"
   cells.get(7).findElement(By.tagName("a")).click();
 }
+
 
 
 }

@@ -30,7 +30,7 @@ public void ensurePrecondition() {
 
 @DataProvider
 public Iterator<Object[]> validContactsFromXml() throws IOException {
-  try(BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.xml")))){
+  try(BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.csv")))){
     String xml = "";
     String line = reader.readLine();
     while (line != null) {
@@ -64,10 +64,10 @@ public void contactCreationTest(ContactData contact) {
   //относительный путь
   File photo = new File("src/test/resources/image.png");
   app.goTo().homePage();
-  Contacts before = app.contact().all();
+  Contacts before = app.db().contacts();
   app.goTo().gotoAddNewPage();
   app.contact().create(contact, true);
-  Contacts after = app.contact().all();
+  Contacts after = app.db().contacts();
   assertThat(after.size(), equalTo(before.size() + 1));
 
   assertThat(after, equalTo(

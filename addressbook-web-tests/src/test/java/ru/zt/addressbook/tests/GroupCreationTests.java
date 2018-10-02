@@ -63,9 +63,9 @@ public Iterator<Object[]> validGroupsFromJson() throws IOException {
 public void testGroupCreation(GroupData group) {
 
   app.goTo().groupPage();
-  Groups before = app.group().all();//размер множеста до создания
+  Groups before = app.db().groups();
   app.group().create(group);
-  Groups after = app.group().all();//размер множества после создания
+  Groups after = app.db().groups();
   assertThat(after.size(), equalTo(before.size() + 1));
   assertThat(after, equalTo(
           before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
@@ -74,11 +74,11 @@ public void testGroupCreation(GroupData group) {
 @Test
 public void testBadGroupCreation() {
   app.goTo().groupPage();
-  Groups before = app.group().all();//размер множеста до создания
+  Groups before = app.db().groups();
   GroupData group = new GroupData().withName("test2'");
   app.group().create(group);
   assertThat(app.group().count(), equalTo(before.size()));
-  Groups after = app.group().all();//размер множества после создания
+  Groups after = app.db().groups();
   assertThat(after, equalTo(before));
 
 }

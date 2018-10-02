@@ -72,22 +72,22 @@ private String email_3;
 @Expose
 @Transient/*поле пропущено*/
 private String allEmail;
-
+/*
 @Expose
 @Column(name="photo")
 @Type(type="text")
 private String photo;
-
+*/
 @Expose
 @Transient/*поле пропущено*/
 private String group;
-
+/*
 public ContactData withPhoto( File photo) {
   this.photo = photo.getPath();
   return this;
 }
 
-public File getPhoto() {  return new File(photo);}
+public File getPhoto() {  return new File(photo);}*/
 
 public String getEmail_1() {  return email_1;}
 
