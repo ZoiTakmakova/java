@@ -3,48 +3,91 @@ package ru.zt.addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
 
 @XStreamAlias("contact")
+@Entity
+@Table(name = "addressbook")
 public class ContactData {
+
 @XStreamOmitField
+@Id
+@Column(name="id")
 private int id =  Integer.MAX_VALUE;
+
 @Expose
+@Column(name="firstname")
 private String firstname;
+
 @Expose
+@Transient/*поле пропущено*/
 private String middlename;
+
 @Expose
+@Column(name="lastname")
 private String lastname;
+
 @Expose
+@Type(type="text")
+@Column(name="address")
 private String address;
+
 @Expose
+@Column(name="home")
+@Type(type="text")
 private String homePhone;
+
 @Expose
+@Type(type="text")
+@Column(name="mobile")
 private String mobilePhone;
+
 @Expose
+@Type(type="text")
+@Column(name="work")
 private String workPhone;
+
 @Expose
+@Transient/*поле пропущено*/
 private String allPhones;
+
 @Expose
+@Type(type="text")
+@Column(name="email")
 private String email_1;
+
 @Expose
+@Type(type="text")
+@Column(name="email2")
 private String email_2;
+
 @Expose
+@Type(type="text")
+@Column(name="email3")
 private String email_3;
+
 @Expose
+@Transient/*поле пропущено*/
 private String allEmail;
+
 @Expose
-private File photo;
+@Column(name="photo")
+@Type(type="text")
+private String photo;
+
 @Expose
+@Transient/*поле пропущено*/
 private String group;
 
-public ContactData withPhoto(File photo) {
-  this.photo = photo;
+public ContactData withPhoto( File photo) {
+  this.photo = photo.getPath();
   return this;
 }
 
-public File getPhoto() {  return photo;}
+public File getPhoto() {  return new File(photo);}
 
 public String getEmail_1() {  return email_1;}
 
