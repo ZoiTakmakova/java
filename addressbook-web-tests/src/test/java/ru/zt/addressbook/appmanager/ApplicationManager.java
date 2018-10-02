@@ -16,7 +16,6 @@ import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
 
-
 private final Properties properties;
 WebDriver wd;
 
@@ -25,17 +24,19 @@ private SessionHelper sessionHelper;
 private NavigationHelper navigationHelper;
 private GroupHelper groupHelper;
 private String browser;
+private DbHelper dbHelper;
 
-public ApplicationManager(String browser){
-
+public ApplicationManager(String browser) {
   this.browser = browser;
   properties = new Properties();
-
 }
 
 public void init() throws IOException {
   String target = System.getProperty("target", "local");
-  properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties",target))));
+  properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+
+  dbHelper = new DbHelper();
+
   if (browser.equals(BrowserType.FIREFOX)) {
     wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true).setBinary("C://Program Files/Mozilla Firefox/firefox.exe"));
   } else if (browser.equals(BrowserType.CHROME)) {
@@ -50,7 +51,7 @@ public void init() throws IOException {
   navigationHelper = new NavigationHelper(wd);
   sessionHelper = new SessionHelper(wd);
   contactHelper = new ContactHelper(wd);
-  sessionHelper.login(properties.getProperty("web.adminLogin"),properties.getProperty("web.adminPassword"));
+  sessionHelper.login(properties.getProperty("web.adminLogin"), properties.getProperty("web.adminPassword"));
 }
 
 public void stop() {
@@ -67,5 +68,9 @@ public NavigationHelper goTo() {
 
 public ContactHelper contact() {
   return contactHelper;
+}
+
+public DbHelper db() {
+  return dbHelper;
 }
 }
