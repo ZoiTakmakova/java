@@ -24,6 +24,9 @@ public void ensurePrecondition() {
     app.goTo().gotoAddNewPage();
     app.contact().create(new ContactData().withLastname("Ivanov1").withFirstname("Ivan1").withGroup("test1").
             withHomePhone("111111").withMobilePhone("22222").withWorkPhone("33333"), true);
+
+    app.contact().create(new ContactData().withLastname("Ivanov1").withFirstname("Ivan1").
+            withHomePhone("111111").withMobilePhone("22222").withWorkPhone("33333"), true);
   }
 }
 

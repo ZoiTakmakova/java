@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import ru.zt.addressbook.model.ContactData;
 import ru.zt.addressbook.model.Contacts;
 import ru.zt.addressbook.model.GroupData;
+import ru.zt.addressbook.model.Groups;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -61,6 +62,7 @@ public Iterator<Object[]> validContactsFromJson() throws IOException {
 
 @Test(dataProvider = "validContactsFromJson")/*(enabled = false)*/
 public void contactCreationTest(ContactData contact) {
+  Groups groups = app.db().groups();
   //относительный путь
   File photo = new File("src/test/resources/image.png");
   app.goTo().homePage();

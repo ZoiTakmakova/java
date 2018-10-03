@@ -7,6 +7,8 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 @XStreamAlias("contact")
 @Entity
@@ -78,9 +80,7 @@ private String allEmail;
 @Type(type="text")
 private String photo;
 */
-@Expose
-@Transient/*поле пропущено*/
-private String group;
+
 /*
 public ContactData withPhoto( File photo) {
   this.photo = photo.getPath();
@@ -88,6 +88,11 @@ public ContactData withPhoto( File photo) {
 }
 
 public File getPhoto() {  return new File(photo);}*/
+
+@ManyToMany(fetch = FetchType.EAGER)
+@JoinTable(name="address_in_groups",
+        joinColumns = @JoinColumn(name="id"), inverseJoinColumns = @JoinColumn(name="group_id")) //таблица связей
+private Set<GroupData> groups = new HashSet<GroupData>();
 
 public String getEmail_1() {  return email_1;}
 
@@ -115,10 +120,6 @@ public String getWorkPhone() {
   return workPhone;
 }
 
-public String getGroup() {
-  return group;
-}
-
 public String getAllPhones() {  return allPhones;}
 
 public String getAllEmail() {  return allEmail;}
@@ -129,10 +130,13 @@ public String getFirstname() {
   return firstname;
 }
 
+public Groups getGroups() {
+  return new Groups(groups);
+}
+
 public String getMiddlename() {
   return middlename;
 }
-
 
 public ContactData withEmail_1(String email_1) {
   this.email_1 = email_1;
@@ -199,13 +203,6 @@ public ContactData withEmail(String allEmail) {
   return this;
 }
 
-public ContactData withGroup(String group) {
-  this.group = group;
-  return this;
-}
-
-
-
 @Override
 public String toString() {
   return "ContactData{" +
@@ -234,4 +231,8 @@ public int hashCode() {
   return result;
 }
 
+public ContactData inGroup(GroupData group) {
+  groups.add(group);
+  return this;
+}
 }

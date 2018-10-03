@@ -35,7 +35,7 @@ public void fillContactData(ContactData contactData, boolean creation) {
 
   //элемент из выпадающего списка
   if (creation) {
-    new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+    new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getName());
   } else {
     Assert.assertFalse(isElementPresent(By.name("new_group")));
   }

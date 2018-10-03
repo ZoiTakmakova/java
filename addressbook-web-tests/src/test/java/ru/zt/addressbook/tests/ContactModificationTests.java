@@ -25,7 +25,7 @@ public void ensurePrecondition() {
   }
 }
 
-@Test
+@Test(enabled = true)
 public void testContactModification() {
 
   app.goTo().homePage();
@@ -33,6 +33,8 @@ public void testContactModification() {
   ContactData modifiedContact = before.iterator().next();
   ContactData contact = new ContactData().withId(modifiedContact.getId()).withLastname("Ivanov2").withFirstname("Ivan2").
           withHomePhone("111111").withMobilePhone("22222").withWorkPhone("33333").withGroup("test1");
+  ContactData contact = new ContactData().withId(modifiedContact.getId()).withLastname("Ivanov2").withFirstname("Ivan2").
+          withHomePhone("111111").withMobilePhone("22222").withWorkPhone("33333");
   app.goTo().homePage();
   app.contact().modify(contact);
    Contacts after = app.db().contacts();
