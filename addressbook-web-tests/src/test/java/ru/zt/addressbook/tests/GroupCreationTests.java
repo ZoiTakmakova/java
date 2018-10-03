@@ -53,13 +53,12 @@ public Iterator<Object[]> validGroupsFromJson() throws IOException {
       line = reader.readLine();
     }
     Gson gson = new Gson();
-    List<GroupData> groups = gson.fromJson(json, new TypeToken<List<GroupData>>() {
-    }.getType()); //List<GroupData>.class
+    List<GroupData> groups = gson.fromJson(json, new TypeToken<List<GroupData>>(){}.getType()); //List<GroupData>.class
     return groups.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
   }
 }
 
-@Test(dataProvider = "validGroupsFromJson")
+@Test(dataProvider = "validGroupsFromXml")
 public void testGroupCreation(GroupData group) {
 
   app.goTo().groupPage();
@@ -69,6 +68,7 @@ public void testGroupCreation(GroupData group) {
   assertThat(after.size(), equalTo(before.size() + 1));
   assertThat(after, equalTo(
           before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+  verifyGroupListInUI();/*настройка конфигурации запуска -DverifyUI=true*/
 }
 
 @Test
@@ -80,6 +80,7 @@ public void testBadGroupCreation() {
   assertThat(app.group().count(), equalTo(before.size()));
   Groups after = app.db().groups();
   assertThat(after, equalTo(before));
+
 
 }
 }

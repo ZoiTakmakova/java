@@ -72,6 +72,7 @@ public void contactCreationTest(ContactData contact) {
 
   assertThat(after, equalTo(
           before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
+  verifyContactListInUI();/*настройка конфигурации запуска -DverifyUI=true*/
 
 }
 }

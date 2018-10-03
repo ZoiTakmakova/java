@@ -36,5 +36,6 @@ public void ContactDeletionTest() {
   assertEquals(after.size(), before.size() - 1);//проверка: кол-во контактов после удаления должно быть равно кол-ву контактов до удаления  -1
 
   assertThat(after, equalTo(before.without(deletedContact)));
+  verifyContactListInUI();/*настройка конфигурации запуска -DverifyUI=true*/
 }
 }

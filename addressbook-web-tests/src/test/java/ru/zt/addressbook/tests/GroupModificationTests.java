@@ -26,12 +26,13 @@ public void testGroupModification() {
   Groups before = app.db().groups();//размер списка до модификации
   GroupData modifiedGroup = before.iterator().next();
   GroupData group = new GroupData()
-          .withId(modifiedGroup.getId()).withName("test1").withHeader("test2").withFooter("test3");
+          .withId(modifiedGroup.getId()).withName("test 1").withHeader("test22").withFooter("test33");
   app.goTo().groupPage();
   app.group().modify(group);
   assertEquals(app.group().count(), before.size());
   Groups after = app.db().groups();//размер списка после модификации
   assertThat(after, equalTo(before.without(modifiedGroup).withAdded(group)));
+  verifyGroupListInUI();/*настройка конфигурации запуска -DverifyUI=true*/
 }
 }
 

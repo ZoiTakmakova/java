@@ -39,5 +39,6 @@ public void testContactModification() {
   assertEquals(after.size(), before.size());
 
   assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
+  verifyContactListInUI();/*настройка конфигурации запуска -DverifyUI=true*/
 }
 }
