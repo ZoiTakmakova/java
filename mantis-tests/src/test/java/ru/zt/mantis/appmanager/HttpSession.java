@@ -44,8 +44,7 @@ public boolean login(String username, String password) throws IOException {
   //получение текса ответа сервера
   String body = getTextFrom(response);
   //провера: успешно ли вошел пользователь по имени пользователя
-  //return body.contains(String.format("<span class=\"italic\">%s</span>", username));
-  return body.contains(String.format("<a href=\"/mantisbt-2.17.1/account_page.php\">%s</a>", username));
+ return body.contains(String.format("<span class=\"italic\">%s</span>", username));
 }
 
 //вспомогательная функция для получения текста ответа сервера
@@ -62,8 +61,7 @@ public boolean isLoggedInAs(String username) throws IOException {
   HttpGet get = new HttpGet(app.getProperty("web.baseUrl")+"/index.php");
   CloseableHttpResponse response = httpclient.execute(get);
   String body = getTextFrom(response);
-  //return body.contains(String.format("<span class=\"italic\">%s</span>",username));
-  return body.contains(String.format("<a href=\"/mantisbt-2.17.1/account_page.php\">%s</a>", username));
+  return body.contains(String.format("<span class=\"italic\">%s</span>",username));
 
 }
 }
