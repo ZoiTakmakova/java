@@ -22,44 +22,43 @@ public MailHelper(ApplicationManager app) {
 }
 
 //count- кол-во писем, timeout - время ожидания
-public List<MailMessage> waitForMail(int count, long timeout)  throws MessagingException,IOException {
-    //фиксация текущего времени
-    long start = System.currentTimeMillis();
-    //проверка времени
-    while (System.currentTimeMillis() < start + timeout) {
-      if (wiser.getMessages().size() >= count) {
-        return wiser.getMessages().stream().map((m) -> toModelMail(m)).collect(Collectors.toList());
-      }
-      try {
-        Thread.sleep(1000);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
+public List<MailMessage> waitForMail(int count, long timeout) throws MessagingException, IOException {
+  //фиксация текущего времени
+  long start = System.currentTimeMillis();
+  //проверка времени
+  while (System.currentTimeMillis() < start + timeout) {
+    if (wiser.getMessages().size() >= count) {
+      return wiser.getMessages().stream().map((m) -> toModelMail(m)).collect(Collectors.toList());
     }
-    throw new Error("No mail :(");
-  }
-
-
-  public static MailMessage toModelMail (WiserMessage m){
     try {
-      MimeMessage mm = m.getMimeMessage();
-      return new MailMessage(mm.getAllRecipients()[0].toString(), (String) mm.getContent());
-    } catch (MessagingException e) {
+      Thread.sleep(1000);
+    } catch (InterruptedException e) {
       e.printStackTrace();
-      return null;
-    }
-    catch (IOException e) {
-      e.printStackTrace();
-      return null;
     }
   }
+  throw new Error("No mail :(");
+}
 
-  public void start () {
-    wiser.start();
-  }
 
-  public void stop () {
-    wiser.stop();
+public static MailMessage toModelMail(WiserMessage m) {
+  try {
+    MimeMessage mm = m.getMimeMessage();
+    return new MailMessage(mm.getAllRecipients()[0].toString(), (String) mm.getContent());
+  } catch (MessagingException e) {
+    e.printStackTrace();
+    return null;
+  } catch (IOException e) {
+    e.printStackTrace();
+    return null;
   }
+}
+
+public void start() {
+  wiser.start();
+}
+
+public void stop() {
+  wiser.stop();
+}
 
 }

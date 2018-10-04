@@ -14,17 +14,17 @@ public class TestBase {
 //Logger logger = LoggerFactory.getLogger(TestBase.class);
 
 protected static final ApplicationManager app
-        = new ApplicationManager(System.getProperty("browser",BrowserType.CHROME));
+        = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));
 
 @BeforeSuite/*один запуск*/
 public void setUp() throws Exception {
   app.init();
-  app.ftp().upload(new File("src/test/resources/config_inc.php"),"config_inc.php","config_inc.php.back");
+  app.ftp().upload(new File("src/test/resources/config_inc.php"), "config_inc.php", "config_inc.php.back");
 }
 
 @AfterSuite(alwaysRun = true)/*один запуск*/
 public void tearDown() throws IOException {
-  app.ftp().restore("config_inc.php.back","config_inc.php");
+  app.ftp().restore("config_inc.php.back", "config_inc.php");
   app.stop();
 }
 }
