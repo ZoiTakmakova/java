@@ -51,33 +51,40 @@ public void addContactToGroup() {
   ContactData addedContact = beforeContact.iterator().next();
   //получить ИД контакта
   int contactId = addedContact.getId();
-  System.out.println(addedContact);
  //получить список групп в которых состоит контакт
-  Groups beforeGroups = addedContact.getGroups();
-  System.out.println(beforeGroups);
+  Groups beforeGroupsOfContact = addedContact.getGroups();
+
 
   //выгрузить группы из бд
-  Groups beforeGroup = app.db().groups();
-  GroupData addedGroup = beforeGroup.iterator().next();
+  Groups allGroups = app.db().groups();
+  //выбрать группу
+ GroupData addedGroup = allGroups.iterator().next();
 
-  //передать  ИД контакта и группы
+ //проверка надо ли создавать новую группу
+
+  if(beforeGroupsOfContact.size()==allGroups.size()){
+    app.goTo().groupPage();
+    app.group().create(new GroupData().withName("test2").withHeader("test2").withFooter("test3"));
+  }
+
+ /*
+  for (GroupData g1 : allGroups) {
+   for(GroupData g2: beforeGroupsOfContact){
+     assertThat(g1, equalTo(g2));
+   }
+  }*/
 
   //добавить контакт в группу
   app.contact().addToGroup(addedContact, addedGroup);
 
   //проверка того что контакт добавлен в группу
-
   Contacts afterContact = app.db().contactInGroup(contactId);
-  ContactData r = afterContact.iterator().next();
-  Groups afterGroups = r.getGroups();
-  /*for (ContactData contact : afterContact) {
-    System.out.println(contact);
-    Groups afterGroups = contact.getGroups();
-  //  System.out.println(afterGroups);
-  }*/
+  ContactData a = afterContact.iterator().next();
+  Groups afterGroups = a.getGroups();
 
 
- assertThat(beforeGroups.size(), equalTo(afterGroups.size()-1));
+
+ assertThat(beforeGroupsOfContact.size(), equalTo(afterGroups.size()-1));
 
 
 
