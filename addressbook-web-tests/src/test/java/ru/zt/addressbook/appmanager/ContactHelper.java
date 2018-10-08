@@ -1,5 +1,6 @@
 package ru.zt.addressbook.appmanager;
 
+import org.hibernate.Session;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,8 +8,11 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.zt.addressbook.model.ContactData;
 import ru.zt.addressbook.model.Contacts;
+import ru.zt.addressbook.model.GroupData;
+import ru.zt.addressbook.model.Groups;
 
 import java.util.List;
+
 
 public class ContactHelper extends HelperBase {
 
@@ -31,11 +35,16 @@ public void fillContactData(ContactData contactData, boolean creation) {
   type(By.name("email"), contactData.getEmail_1());
   type(By.name("email2"), contactData.getEmail_2());
   type(By.name("email3"), contactData.getEmail_3());
- // attach(By.name("photo"), contactData.getPhoto());
+  // attach(By.name("photo"), contactData.getPhoto());
+
 
   //элемент из выпадающего списка
+
   if (creation) {
-    new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getName());
+    if (contactData.getGroups().size() > 0) {
+      Assert.assertTrue(contactData.getGroups().size() == 1);
+      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getName());
+    }
   } else {
     Assert.assertFalse(isElementPresent(By.name("new_group")));
   }
@@ -49,6 +58,7 @@ public void selectContact(int index) {
   wd.findElements(By.name("selected[]")).get(index).click();
 }
 
+//выбрать контакт по Id
 public void selectContactById(int id) {
   wd.findElement(By.cssSelector("input[value ='" + id + "']")).click();
 }
@@ -79,6 +89,35 @@ public void create(ContactData contact, boolean b) {
   returnToHomePage();
 }
 
+//метод добавления контакта в группу
+public void addToGroup(ContactData contact,GroupData group) {
+  //нажать на чекбокс выбора контакта
+  selectContactById(contact.getId());
+  //выбрать из выпадающего списка группу для добавления контакта
+  selectGroupForAddition(group.getId());
+  submitAddTo();
+  gotoUsersAdded(group.getId());
+}
+
+//
+public void gotoUsersAdded(int id) {
+   wd.findElement(By.cssSelector("a[href ='./?group=" + id + "']")).click();
+  System.out.println("FINE!");
+}
+
+//выбрать из выпадающего списка группу для добавления контакта
+public void selectGroupForAddition(int id){
+  wd.findElement(By.cssSelector(String.format("select[name ='to_group']>option[value='%s']",id))).click();
+  ///descendant:div[@id=’header’]
+  //css=form[name=second_form] > input[name~=sample_name]
+    }
+
+//кнопка Add to
+public void submitAddTo(){
+  wd.findElement(By.cssSelector("input[value ='Add to']")).click();
+}
+
+
 public void modify(ContactData contact) {
   selectContactById(contact.getId());
   submitEditContact(contact.getId());
@@ -93,6 +132,8 @@ public void delete(ContactData contact) {
   contactCash = null;
   completionDeletion();
 }
+
+
 
 private Contacts contactCash = null;
 
@@ -129,7 +170,7 @@ public ContactData infoFromEditForm(ContactData contact) {
   String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
   String work = wd.findElement(By.name("work")).getAttribute("value");
   wd.navigate().back();
-  return  new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname).withAddress(address)
+  return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname).withAddress(address)
           .withEmail_1(email_1).withEmail_2(email_2).withEmail_3(email_3)
           .withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work);
 }
@@ -137,7 +178,7 @@ public ContactData infoFromEditForm(ContactData contact) {
 //выбор контакта по идентификатору
 private void initContactModificationById(int id) {
   //находим чек-бокс
-  WebElement checkbox = wd.findElement(By.cssSelector(String.format("input[value='%s']",id)));
+  WebElement checkbox = wd.findElement(By.cssSelector(String.format("input[value='%s']", id)));
   //далее переходим к родительскому эл-ту относительно чек-бокса [input(чек-бокс)-->td(ячейка)-->tr(строка)]
   WebElement row = checkbox.findElement(By.xpath("./../.."));
   //берем полный список ячеек, те ищем в строке все элементы, которые имеют тег "td"
@@ -145,7 +186,6 @@ private void initContactModificationById(int id) {
   //среди этих ячеек берем по номеру [get(7)] нужную, внутри ячейки находим ссылку с тегом "а"
   cells.get(7).findElement(By.tagName("a")).click();
 }
-
 
 
 }

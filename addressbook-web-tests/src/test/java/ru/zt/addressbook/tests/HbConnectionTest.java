@@ -8,9 +8,14 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ru.zt.addressbook.model.ContactData;
+import ru.zt.addressbook.model.Contacts;
 import ru.zt.addressbook.model.GroupData;
 
 import java.util.List;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static ru.zt.addressbook.tests.TestBase.app;
 
 public class HbConnectionTest {
 
@@ -34,18 +39,19 @@ protected void setUp() throws Exception {
 
 @Test
 public void testHbConnection() {
+
+
   Session session = sessionFactory.openSession();
   session.beginTransaction();
-  List<ContactData> result = session.createQuery("from ContactData where deprecated='0000-00-00'").list();
+  List<ContactData> resultContact = session.createQuery("from ContactData where deprecated='0000-00-00'").list();
   session.getTransaction().commit();
   session.close();
 
-  for (ContactData contact : result) {
+  for (ContactData contact : resultContact) {
     System.out.println(contact);
     System.out.println(contact.getGroups());
   }
 
-}
   /*
 @Test
 public void testHbConnection(){
@@ -58,6 +64,7 @@ public void testHbConnection(){
   session.getTransaction().commit();
   session.close();
   */
+}
 }
 
 

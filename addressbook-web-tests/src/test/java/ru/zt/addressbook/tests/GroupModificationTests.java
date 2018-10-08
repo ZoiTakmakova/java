@@ -23,14 +23,14 @@ public void ensurePrecondition() {
 
 public void testGroupModification() {
 
-  Groups before = app.db().groups();//размер списка до модификации
+  Groups before = app.db().groups();
   GroupData modifiedGroup = before.iterator().next();
   GroupData group = new GroupData()
           .withId(modifiedGroup.getId()).withName("test 1").withHeader("test22").withFooter("test33");
   app.goTo().groupPage();
   app.group().modify(group);
   assertEquals(app.group().count(), before.size());
-  Groups after = app.db().groups();//размер списка после модификации
+  Groups after = app.db().groups();
   assertThat(after, equalTo(before.without(modifiedGroup).withAdded(group)));
   verifyGroupListInUI();/*настройка конфигурации запуска -DverifyUI=true*/
 }

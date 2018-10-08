@@ -3,6 +3,7 @@ package ru.zt.addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.ManyToAny;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -74,25 +75,23 @@ private String email_3;
 @Expose
 @Transient/*поле пропущено*/
 private String allEmail;
+
+@ManyToMany(fetch =  FetchType.EAGER)
+@JoinTable(name="address_in_groups"
+        ,joinColumns = @JoinColumn(name="id"),inverseJoinColumns = @JoinColumn(name="group_id"))
+private Set<GroupData> groups= new HashSet<GroupData>();
 /*
 @Expose
 @Column(name="photo")
 @Type(type="text")
 private String photo;
-*/
 
-/*
 public ContactData withPhoto( File photo) {
   this.photo = photo.getPath();
   return this;
 }
 
 public File getPhoto() {  return new File(photo);}*/
-
-@ManyToMany(fetch = FetchType.EAGER)
-@JoinTable(name="address_in_groups",
-        joinColumns = @JoinColumn(name="id"), inverseJoinColumns = @JoinColumn(name="group_id")) //таблица связей
-private Set<GroupData> groups = new HashSet<GroupData>();
 
 public String getEmail_1() {  return email_1;}
 
@@ -130,13 +129,10 @@ public String getFirstname() {
   return firstname;
 }
 
-public Groups getGroups() {
-  return new Groups(groups);
-}
-
 public String getMiddlename() {
   return middlename;
 }
+
 
 public ContactData withEmail_1(String email_1) {
   this.email_1 = email_1;
@@ -201,6 +197,10 @@ public ContactData withWorkPhone(String workPhone) {
 public ContactData withEmail(String allEmail) {
   this.allEmail = allEmail;
   return this;
+}
+
+public Groups getGroups() {
+  return new Groups(groups);
 }
 
 @Override

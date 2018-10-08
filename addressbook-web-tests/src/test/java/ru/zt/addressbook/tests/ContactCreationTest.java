@@ -62,8 +62,6 @@ public Iterator<Object[]> validContactsFromJson() throws IOException {
 
 @Test(dataProvider = "validContactsFromJson")/*(enabled = false)*/
 public void contactCreationTest(ContactData contact) {
-  Groups groups = app.db().groups();
-  //относительный путь
   File photo = new File("src/test/resources/image.png");
   app.goTo().homePage();
   Contacts before = app.db().contacts();

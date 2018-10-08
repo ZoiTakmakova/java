@@ -44,6 +44,10 @@ private int id = Integer.MAX_VALUE;
 @Column(name = "group_name")
 private String name;
 
+public Set<ContactData> getContacts() {
+  return new Contacts(contacts);
+}
+
 @Expose
 @Column(name = "group_header")
 @Type(type = "text")
@@ -54,10 +58,7 @@ private String header;
 @Type(type = "text")
 private String footer;
 
-public Contacts getContacts() {
-  return new Contacts(contacts);}
-
-@ManyToMany(mappedBy = "groups") //организация связей в БД берется из парного класса
+@ManyToMany(mappedBy = "groups")
 private Set<ContactData> contacts = new HashSet<ContactData>();
 
 public int getId() {

@@ -84,7 +84,7 @@ private void saveAsCsv(List<ContactData> contacts, File file) throws IOException
   //открытие файла
   try (Writer writer = new FileWriter(file)) {
     for (ContactData contact : contacts) {
-      writer.write(String.format("%s;%s;%s\n", contact.getLastname(), contact.getFirstname(), contact.getGroup()));
+      writer.write(String.format("%s;%s;%s\n", contact.getLastname(), contact.getFirstname()/*, contact.getGroup()*/));
     }
   }
 }
@@ -94,7 +94,7 @@ private List<ContactData> generateContacts(int count) {
   for (int i = 0; i < count; i++) {
     contacts.add(new ContactData().withLastname(String.format("Ivanov %s", i)).withFirstname(String.format("Ivan %s", i))
             .withAddress(String.format("address %s", i)).withEmail_1(String.format("%s@mail.ru", i)).withEmail_2(String.format("%s@mail.ru", i)).withEmail_3(String.format("%s@mail.ru", i)).withHomePhone(String.format("11111%s", i))
-            .withMobilePhone(String.format("22222%s", i)).withWorkPhone(String.format("33333%s", i)).withGroup((String.format("test %s", i))));
+            .withMobilePhone(String.format("22222%s", i)).withWorkPhone(String.format("33333%s", i))/*.withGroup((String.format("test %s", i)))*/);
   }
   return contacts;
 }

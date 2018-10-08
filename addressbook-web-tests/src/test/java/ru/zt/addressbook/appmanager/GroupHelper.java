@@ -25,6 +25,8 @@ public void submitGroupCreation() {
   click(By.name("submit"));
 }//обновить группу
 
+
+
 public void fillGroupForm(GroupData groupData) {
   type(By.name("group_name"), groupData.getName());
   type(By.name("group_header"), groupData.getHeader());
