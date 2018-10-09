@@ -86,7 +86,7 @@ public void create(ContactData contact, boolean b) {
   fillContactData(contact, b);
   submitAddNewCreation();
   contactCash = null;
-  returnToHomePage();
+
 }
 
 //метод добавления контакта в группу
@@ -97,12 +97,19 @@ public void addToGroup(ContactData contact,GroupData group) {
   selectGroupForAddition(group.getId());
   submitAddTo();
   gotoUsersAdded(group.getId());
+  selectAllGroup();
 }
 
 //
 public void gotoUsersAdded(int id) {
    wd.findElement(By.cssSelector("a[href ='./?group=" + id + "']")).click();
   System.out.println("FINE!");
+}
+//выбрать из выпадающего списка все группы для просмотра контактов
+public void selectAllGroup(){
+  wd.findElement(By.cssSelector(String.format("select[name ='group']>option[value='']"))).click();
+  ///descendant:div[@id=’header’]
+  //css=form[name=second_form] > input[name~=sample_name]
 }
 
 //выбрать из выпадающего списка группу для добавления контакта

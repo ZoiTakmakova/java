@@ -1,18 +1,12 @@
 package ru.zt.addressbook.tests;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.zt.addressbook.model.ContactData;
 import ru.zt.addressbook.model.Contacts;
 import ru.zt.addressbook.model.GroupData;
 import ru.zt.addressbook.model.Groups;
-
-import java.security.acl.Group;
-import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -22,21 +16,64 @@ public class AddContactToGroupTest extends TestBase {
 private SessionFactory sessionFactory;
 private ContactData contact;
 
-//предусловие: если нет контакта, создать его
+//проверка предусловий
 @BeforeMethod
 public void ensurePrecondition1() {
   if (app.db().contacts().size() == 0) {
+    if (app.db().groups().size() == 0) {
+      app.goTo().groupPage();
+      app.group().create(new GroupData().withName("test1").withHeader("test2").withFooter("test3"));
+    }
     app.goTo().gotoAddNewPage();
+    //получаем из БД все группы
+    Groups groups = app.db().groups();
     app.contact().create(new ContactData().withLastname("Ivanov1").withFirstname("Ivan1").
             withHomePhone("111111").withMobilePhone("22222").withWorkPhone("33333"), true);
   }
 }
-//предусловие: если нет группы, создать ее
+
+//проверка предусловия:если контакт не добавлен ни в одну группу, добавить в любую
 @BeforeMethod
 public void ensurePrecondition2() {
-  if (app.db().groups().size() == 0) {
-    app.goTo().groupPage();
-    app.group().create(new GroupData().withName("test1").withHeader("test2").withFooter("test3"));
+  app.goTo().homePage();
+  //получить список контактов
+  Contacts beforeAddedContact = app.db().contacts();
+  //получить список всех групп
+  Groups allGroups = app.db().groups();
+  //цикл перебора всех существующих  контактов
+  for (ContactData c : beforeAddedContact) {
+    int contactId = c.getId();
+    //получить список групп в которые включен контакт
+    Groups beforeGroupsOfContact = c.getGroups();
+    //если контакт не добавлен ни в одну группу, добавить в любую
+    if (beforeGroupsOfContact.size() == 0) {
+      app.contact().addToGroup(c, allGroups.iterator().next());
+      //проверить что контакт добавлен в группу
+      Contacts afterContact = app.db().contactInGroup(contactId);
+      ContactData a = afterContact.iterator().next();
+      Groups afterGroupsOfContact = a.getGroups();
+      assertThat(afterGroupsOfContact.size(), equalTo(beforeGroupsOfContact.size() + 1));
+    }
+  }
+}
+
+//проверка предусловий:если все контакты добавлены во все группы, создать новую группу
+@BeforeMethod
+public void ensurePrecondition3() {
+  //получить список контактов
+  Contacts beforeAddedContact = app.db().contacts();
+  //получить список всех групп
+  Groups allGroups = app.db().groups();
+  //цикл перебора всех существующих  контактов
+  for (ContactData c : beforeAddedContact) {
+    //получить список групп в которые включен контакт
+    Groups groupsOfContact = c.getGroups();
+    //если количество групп,в которых состоит контакт и количество вообще существующих групп равны, создаем новую группу
+    if (groupsOfContact.size() == allGroups.size()) {
+      app.goTo().groupPage();
+      app.group().create(new GroupData().withName("test2").withHeader("test2").withFooter("test3"));
+      break;
+    }
   }
 }
 
@@ -47,69 +84,39 @@ public void addContactToGroup() {
   app.goTo().homePage();
   //получить список контактов
   Contacts beforeContact = app.db().contacts();
-  //выбрать контакт
-  ContactData addedContact = beforeContact.iterator().next();
-  //получить ИД контакта
-  int contactId = addedContact.getId();
- //получить список групп в которых состоит контакт
-  Groups beforeGroupsOfContact = addedContact.getGroups();
-
-
-  //выгрузить группы из бд
+  //получить список всех групп
   Groups allGroups = app.db().groups();
-  //выбрать группу
- GroupData addedGroup = allGroups.iterator().next();
-
- //проверка надо ли создавать новую группу
-
-  if(beforeGroupsOfContact.size()==allGroups.size()){
-    app.goTo().groupPage();
-    app.group().create(new GroupData().withName("test2").withHeader("test2").withFooter("test3"));
+  //цикл перебора всех существующих  контактов
+  for (ContactData c : beforeContact) {
+//получить список групп в которые включен контакт
+    Groups beforeGroupsOfContact = c.getGroups();
+    int contactId = c.getId();
+    //цикл перебора всех существующих групп
+    for (GroupData g1 : allGroups) {
+      int g1Id = g1.getId();
+      //количество попыток
+      int n = 0;
+      //цикл перебора всех групп в которые включен контакт
+      for (GroupData g2 : beforeGroupsOfContact) {
+        int g2Id = g2.getId();
+        //количество попыток увеличивается на 1
+        ++n;
+        //если ид групп не равны
+        if (g1Id != g2Id) {
+          //проверить есть ли еще попытки
+          if (n == beforeGroupsOfContact.size()) {
+            //если попыток нет, добавить с в g1
+            app.contact().addToGroup(c, g1);
+            //проверить что контакт добавлен в группу
+            Contacts afterContact = app.db().contactInGroup(contactId);
+            ContactData a = afterContact.iterator().next();
+            Groups afterGroupsOfContact = a.getGroups();
+            assertThat(afterGroupsOfContact.size(), equalTo(beforeGroupsOfContact.size() + 1));
+            break;
+          }
+        } else break;
+      }
+    }
   }
-
- /*
-  for (GroupData g1 : allGroups) {
-   for(GroupData g2: beforeGroupsOfContact){
-     assertThat(g1, equalTo(g2));
-   }
-  }*/
-
-  //добавить контакт в группу
-  app.contact().addToGroup(addedContact, addedGroup);
-
-  //проверка того что контакт добавлен в группу
-  Contacts afterContact = app.db().contactInGroup(contactId);
-  ContactData a = afterContact.iterator().next();
-  Groups afterGroups = a.getGroups();
-
-
-
- assertThat(beforeGroupsOfContact.size(), equalTo(afterGroups.size()-1));
-
-
-
-/*
-  app.goTo().homePage();
-  //выбрать контакт
-  Contacts beforeContact = app.db().contacts();
-  ContactData addedContact = beforeContact.iterator().next();
-
-//проверить что контакт добавлен во все группы
-
-
-  //выгрузить группы из бд
-  Groups beforeGroup = app.db().groups();
-  GroupData addedGroup = beforeGroup.iterator().next();
-
-  //добавить контакт в группу
-  app.contact().addToGroup(addedContact,addedGroup);
-
-// проверить что контакт добавлен в группу
-  Contacts afterContact = app.db().contactInGroup();
-  int contactInGroup = afterContact.iterator().next().getId();
-
-*/
-
-
 }
 }
