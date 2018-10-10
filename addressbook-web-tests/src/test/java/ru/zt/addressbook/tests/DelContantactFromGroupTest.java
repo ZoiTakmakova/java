@@ -6,18 +6,24 @@ import ru.zt.addressbook.model.Contacts;
 import ru.zt.addressbook.model.GroupData;
 import ru.zt.addressbook.model.Groups;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static ru.zt.addressbook.tests.TestBase.app;
 
-public class DelContantactFromGroupTest  extends TestBase {
+public class DelContantactFromGroupTest extends TestBase {
 
 @Test
 public void delContactFromGroup() {
   app.goTo().homePage();
   //получить список контактов
-  Contacts allContact = app.db().contacts();
+  // Contacts allContact = app.db().contacts();
   //получить список всех групп
   Groups allGroups = app.db().groups();
+  //цикл перебора всех существующих групп
+  for (GroupData g1 : allGroups) {
+    int g1Id = g1.getId();
 
+/*
   //цикл перебора всех существующих групп
   for (GroupData g1 : allGroups) {
     int g1Id = g1.getId();
@@ -26,21 +32,28 @@ public void delContactFromGroup() {
     for (ContactData c : allContact) {
       int contactId = c.getId();
       //получить список групп в которые включен контакт
-      Groups groupsOfContact = c.getGroups();
+      Groups beforeGroupsOfContact = c.getGroups();
 
       //цикл перебора всех групп в которые включен контакт
-      for (GroupData g2 : groupsOfContact) {
+      for (GroupData g2 : beforeGroupsOfContact) {
         int g2Id = g2.getId();
         //если ид групп  равны
         if (g1Id == g2Id) {
-          //удаляем контакт из группы и покидаем все циклы
+          //удаляем контакт из группы
           app.contact().delFromGroup(c, g1);
           //проверить, что контакт удалился из группы
+          Contacts afterContact = app.db().contactInGroup(contactId);
+          ContactData a = afterContact.iterator().next();
+          Groups afterGroupsOfContact = a.getGroups();
+          assertThat(afterGroupsOfContact.size(), equalTo(beforeGroupsOfContact.size() - 1));
           break;
         }
 
       }
+
     }
+
+  }*/
   }
 }
 }
