@@ -51,7 +51,8 @@ public void ensurePrecondition2() {
       ContactData a = afterContact.iterator().next();
       Groups afterGroupsOfContact = a.getGroups();
       assertThat(afterGroupsOfContact.size(), equalTo(beforeGroupsOfContact.size() + 1));
-    }
+    }else break;
+
   }
 }
 
@@ -75,7 +76,6 @@ public void ensurePrecondition3() {
        //создаем новую группу
         app.goTo().groupPage();
         app.group().create(new GroupData().withName("test2").withHeader("test2").withFooter("test3"));
-
     }
   }
 }

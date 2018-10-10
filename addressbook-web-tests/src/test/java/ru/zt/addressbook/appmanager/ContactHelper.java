@@ -50,6 +50,8 @@ public void fillContactData(ContactData contactData, boolean creation) {
   }
 }
 
+
+
 public void submitAddNewCreation() {
   click(By.xpath("//div[@id='content']/form/input[21]"));
 }
@@ -89,6 +91,36 @@ public void create(ContactData contact, boolean b) {
 
 }
 
+//метод удаления контакта из группы
+public void delFromGroup(ContactData contact,GroupData group){
+  //выбрать из выпадающего списка группу для просмотра контактов
+  selectGroup(group.getId());
+  //нажать на чекбокс выбора контакта
+  selectContactById(contact.getId());
+  //нажать кнопку удалить контакт из группы
+  remove();
+  //вернуться на страницу группы
+  returnToGroupPage(group.getId());
+}
+
+//кнопка Add to
+public void remove(){
+  wd.findElement(By.cssSelector("input[name ='remove']")).click();
+}
+
+//выбрать из выпадающего списка группу для просмотра контактов
+public void selectGroup(int id){
+  wd.findElement(By.cssSelector(String.format("select[name ='group']>option[value='%s']",id))).click();
+  //wd.findElement(By.cssSelector(String.format("select[name ='to_group']>option[value='%s']",id))).click();
+}
+
+public void returnToGroupPage(int id) {
+  wd.findElement(By.cssSelector("a[href ='./?group=" + id + "']")).click();
+  System.out.println("FINE!");
+}
+
+
+
 //метод добавления контакта в группу
 public void addToGroup(ContactData contact,GroupData group) {
   //нажать на чекбокс выбора контакта
@@ -105,6 +137,9 @@ public void gotoUsersAdded(int id) {
    wd.findElement(By.cssSelector("a[href ='./?group=" + id + "']")).click();
   System.out.println("FINE!");
 }
+
+
+
 //выбрать из выпадающего списка все группы для просмотра контактов
 public void selectAllGroup(){
   wd.findElement(By.cssSelector(String.format("select[name ='group']>option[value='']"))).click();
